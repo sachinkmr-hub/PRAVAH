@@ -1270,46 +1270,25 @@ export default function Dashboard() {
                     fillOpacity: isSelectedCluster ? 0.2 : 0.05,
                     weight: isSelectedCluster ? 4 : 2,
                   }}
-                >
-                  <Tooltip direction="right" offset={[10, 0]} opacity={1} interactive={true} className="db-cluster-tooltip">
-                    <div className="db-cluster-card">
-                      <h4>{cluster.location_name}</h4>
-                      <div className="db-cluster-events">
-                        {cluster.events.map(ev => (
-                          <div 
-                            key={ev.eventId} 
-                            className="db-cluster-event-item"
-                            onClick={() => {
-                              setZoomTarget([cluster.latitude, cluster.longitude]);
-                              // Also trigger intelligence panel
-                              setIntelligenceLoading(true);
-                              fetch(`/api/v1/event/${ev.eventId}/intelligence`)
-                                .then(res => res.json())
-                                .then(data => {
-                                  if (data.status === 'success') setSelectedIntelligence(data); selectedEventIdRef.current = data.eventId;
-                                  setIntelligenceLoading(false);
-                                })
-                                .catch(err => {
-                                  console.error("Failed to load int:", err);
-                                  setIntelligenceLoading(false);
-                                });
-                            }}
-                          >
-                            <span 
-                              className="db-urgency-dot" 
-                              style={{ backgroundColor: URGENCY_COLORS[ev.urgency] }} 
-                              title={ev.urgency}
-                            />
-                            <div className="db-ev-details">
-                              <span className="db-ev-name">{ev.event_name}</span>
-                              <span className="db-ev-time">{relativeLabel(ev.start_datetime)}</span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </Tooltip>
-                </Circle>
+                  eventHandlers={{
+                    click: () => {
+                      const ev = cluster.events[0];
+                      if (!ev) return;
+                      setZoomTarget([cluster.latitude, cluster.longitude]);
+                      setIntelligenceLoading(true);
+                      fetch(`/api/v1/event/${ev.eventId}/intelligence`)
+                        .then(res => res.json())
+                        .then(data => {
+                          if (data.status === 'success') setSelectedIntelligence(data); selectedEventIdRef.current = data.eventId;
+                          setIntelligenceLoading(false);
+                        })
+                        .catch(err => {
+                          console.error("Failed to load int:", err);
+                          setIntelligenceLoading(false);
+                        });
+                    }
+                  }}
+                />
               );
             })}
 
