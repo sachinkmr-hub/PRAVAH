@@ -5,5 +5,9 @@ export default async function handler(req: Request, res: Response) {
   if (!isReady()) {
     await loadDataset();
   }
-  return app(req, res);
+  await new Promise<void>((resolve, reject) => {
+    res.on("finish", resolve);
+    res.on("error", reject);
+    app(req, res);
+  });
 }
