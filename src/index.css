@@ -459,7 +459,7 @@
   opacity: 0;
   pointer-events: none;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.97);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-left: 1px solid rgba(0,0,0,0.08);
@@ -1344,7 +1344,9 @@
   top: 14px;
   left: 338px; /* 68 + 256 + 14 */
   width: 240px;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid #e8e8e8;
   border-radius: 16px;
   display: flex;

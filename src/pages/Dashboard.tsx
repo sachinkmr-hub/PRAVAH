@@ -78,6 +78,7 @@ const LOCATION_OPTIONS: { name: string; lat: number; lng: number }[] = [
   { name: "Marathahalli",   lat: 12.9560, lng: 77.7010 }, // East division TPS
   { name: "Jayanagar",      lat: 12.9308, lng: 77.5833 }, // South division TPS
   { name: "Malleshwaram",   lat: 12.9977, lng: 77.5680 }, // North division TPS
+  { name: "Other",          lat: 12.9716, lng: 77.5946 }, // General Bengaluru Coordinates
 ];
 
 /* ─── Haversine distance (km) between two lat/lng points ─── */
@@ -1027,18 +1028,40 @@ export default function Dashboard() {
         </aside>
 
         {/* ── Live Astram Pings Panel ── */}
-        {(activeRailIdx !== 2) && (activeNotifications.length > 0) && (
-          <aside 
-            className="db-sub-sidebar transition-all duration-500 ease-in-out" 
-            style={{ 
-              background: `rgba(255, 255, 255, ${subSidebarOpacity})`,
-              left: selectedIntelligence ? '338px' : 'auto',
-              right: selectedIntelligence ? 'auto' : '16px',
-            }}
-          >
-            <div className="db-sub-sidebar-live-pings mb-4">
+        <aside 
+          className="db-sub-sidebar transition-all duration-500 ease-in-out" 
+          style={{ 
+            background: `rgba(255, 255, 255, ${subSidebarOpacity})`,
+            left: selectedIntelligence ? '338px' : 'auto',
+            right: selectedIntelligence ? 'auto' : '16px',
+          }}
+        >
+          <div className="db-sub-sidebar-live-pings mb-4">
+            <div className="flex items-center justify-between">
               <h3 className="db-sub-sidebar-title" style={{ color: '#0ea5e9' }}>Live Astram Pings</h3>
-              <div className="db-sub-sidebar-list">
+              <button 
+                onClick={() => {
+                  const newPing = {
+                    id: "weather-proactive-" + Date.now(),
+                    displayId: Date.now(),
+                    eventName: "Imminent Flash Flooding",
+                    street: "Silk Board Junction",
+                    lat: 12.9172,
+                    lng: 77.6228,
+                    type: "PROACTIVE" as const,
+                    dashCategory: "weather"
+                  };
+                  setActiveNotifications(prev => [newPing, ...prev]);
+                }}
+                className="text-[10px] bg-sky-100 hover:bg-sky-200 text-sky-700 px-2 py-1 rounded border border-sky-200 transition-colors font-medium"
+                title="Simulate Weather Impact"
+              >
+                + Weather Alert
+              </button>
+            </div>
+            
+            {(activeNotifications.length > 0) ? (
+              <div className="db-sub-sidebar-list mt-2">
                 {activeNotifications.map(n => (
                   <button
                     key={n.displayId}
@@ -1079,9 +1102,11 @@ export default function Dashboard() {
                   </button>
                 ))}
               </div>
-            </div>
-          </aside>
-        )}
+            ) : (
+              <div className="text-xs text-slate-400 py-4 text-center font-medium">No live pings currently active.</div>
+            )}
+          </div>
+        </aside>
 
         {/* ── Sub-Locations Panel (Appears for selected category OR active pings) ── */}
         {(activeRailIdx !== 2) && (layerClusters.length > 0) && (!selectedIntelligence || hoveredDashboard === activeDashboard) && (
@@ -1612,7 +1637,8 @@ export default function Dashboard() {
                              eventId: selectedIntelligence.eventId,
                              density: selectedIntelligence.kinematic_state?.baseline_demand_vph ? Math.round(selectedIntelligence.kinematic_state.baseline_demand_vph / 20) : 85,
                              velocity: selectedIntelligence.kinematic_state?.shockwave_speed_kmh ?? 15,
-                             officersAvailable: selectedIntelligence.tactical_deployment?.officers_required ?? 45
+                             officersAvailable: selectedIntelligence.tactical_deployment?.officers_required ?? 45,
+                             type: selectedIntelligence.event?.type
                           })
                         });
                         const data = await res.json();
