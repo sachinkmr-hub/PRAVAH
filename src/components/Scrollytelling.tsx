@@ -366,15 +366,14 @@ const MapUpdater: React.FC<{ activeStep: number }> = ({ activeStep }) => {
     lastStep.current = activeStep;
 
     if (activeStep === 3) {
-      // Fine-tuned offset: Shift map focal point exactly half the width of the right sidebar
-      // to perfectly center the highlight in the visible area.
-      map.flyTo([13.002, 77.5730], 14.5, { duration: 1.5 });
+      // Pan slightly to the right to accommodate the sidebar
+      map.flyTo([13.002, 77.5730], 14, { duration: 1.5, easeLinearity: 0.25 });
     } else if (activeStep === 2) {
-      // Zoom in but keep the center on the exact location
-      map.flyTo([13.002, 77.5707], 14.5, { duration: 1.5 });
+      // Center on the incident
+      map.flyTo([13.002, 77.5707], 14, { duration: 1.5, easeLinearity: 0.25 });
     } else {
-      // Zoom out to macro view
-      map.flyTo([13.002, 77.5707], 13.5, { duration: 1.5 });
+      // Back to macro view
+      map.flyTo([13.002, 77.5707], 14, { duration: 1.5, easeLinearity: 0.25 });
     }
   }, [activeStep, map]);
   return null;
@@ -382,13 +381,14 @@ const MapUpdater: React.FC<{ activeStep: number }> = ({ activeStep }) => {
 
 const BengaluruMap: React.FC<{ activeStep: number }> = ({ activeStep }) => (
   <div className="relative w-full h-full overflow-hidden bg-[#e8eceb]">
-    <div className="absolute inset-0 w-full h-full">
+    <div 
+      className="absolute inset-0 w-full h-full transition-transform duration-[1500ms] ease-in-out"
+      style={{ transform: activeStep >= 2 ? 'scale(1.15)' : 'scale(1)' }}
+    >
       <div className="absolute inset-0">
         <MapContainer
           center={[13.002, 77.5707]}
-          zoom={13.5}
-          zoomSnap={0.5}
-          zoomDelta={0.5}
+          zoom={14}
           zoomControl={false}
           dragging={false}
           scrollWheelZoom={false}
