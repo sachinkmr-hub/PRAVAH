@@ -331,7 +331,6 @@ const getEventIcon = (eventName: string, type: string) => {
   const color = type === "PROACTIVE" ? "#3B82F6" : "#EF4444";
 
   return L.divIcon({
-    className: 'animate-fade-in',
     html: `<div style="
       font-size: 20px; 
       text-shadow: 0 2px 4px rgba(0,0,0,0.4); 
@@ -345,7 +344,7 @@ const getEventIcon = (eventName: string, type: string) => {
       justify-content: center;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     ">${emoji}</div>`,
-    className: '',
+    className: 'animate-fade-in',
     iconSize: [32, 32],
     iconAnchor: [16, 16]
   });
