@@ -1,9 +1,10 @@
 import express, { type Request, type Response } from "express";
 import path from "path";
 import fs from "fs";
-import csv from "csv-parser";
+import csvParser from "csv-parser";
+// Safe interop for CJS/ESM
+const csv = (typeof csvParser === "function" ? csvParser : (csvParser as any).default) as typeof csvParser;
 import dotenv from "dotenv";
-import { createServer as createViteServer } from "vite";
 import Groq from "groq-sdk";
 import {
   buildIntelligence,
@@ -495,6 +496,7 @@ app.post("/api/strategy", async (req, res) => {
 async function start() {
   await loadDataset();
   if (process.env.NODE_ENV !== "production") {
+    const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({ server: { middlewareMode: true }, appType: "spa" });
     app.use(vite.middlewares);
   } else {

@@ -1727,7 +1727,7 @@
 }
 
 .db-middle-panel {
-  background: rgba(255, 255, 255, 0.05); /* Extremely watery clear */
+  background: rgba(255, 255, 255, 0.90); /* High opacity for readability */
   backdrop-filter: blur(12px) saturate(140%);
   -webkit-backdrop-filter: blur(12px) saturate(140%);
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -1934,7 +1934,7 @@ body.dark-mode .db-rail-btn { color: #94a3b8; }
 body.dark-mode .db-rail-btn:hover { background: #334155; color: #f8fafc; }
 body.dark-mode .db-rail-active { background: #38bdf8; color: #0f172a; }
 body.dark-mode .db-middle-panel {
-  background: rgba(30, 41, 59, 0.8);
+  background: rgba(30, 41, 59, 0.95);
   border-color: rgba(255,255,255,0.1);
   color: #f8fafc;
 }
