@@ -739,19 +739,12 @@ export default function Dashboard() {
   /* ── When an intelligence popup opens, simulate a HITL countdown ── */
   useEffect(() => {
     if (selectedIntelligence) {
-      setHitlTimeLeft(45);
+      setHitlTimeLeft(null); // Timer removed per user request
       setUseMinOfficers(false);
     } else {
       setHitlTimeLeft(null);
     }
   }, [selectedIntelligence]);
-
-  useEffect(() => {
-    if (hitlTimeLeft !== null && hitlTimeLeft > 0) {
-      const timer = setTimeout(() => setHitlTimeLeft(hitlTimeLeft - 1), 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [hitlTimeLeft]);
 
   /* ── Reset backend simulation on page reload so pings start from zero ── */
   useEffect(() => {
@@ -1184,7 +1177,9 @@ export default function Dashboard() {
               style={{ display: 'flex', alignItems: 'center', gap: '6px', background: !selectedIntelligence?.eventId ? 'var(--bg-card)' : 'var(--accent)', color: !selectedIntelligence?.eventId ? '#666' : 'white', borderColor: 'transparent', boxShadow: !selectedIntelligence?.eventId ? 'none' : '0 0 12px rgba(14, 165, 233, 0.4)', opacity: !selectedIntelligence?.eventId ? 0.5 : 1, cursor: !selectedIntelligence?.eventId ? 'not-allowed' : 'pointer' }}
             >
               <Zap size={14} strokeWidth={2.5} />
-              <span style={{ fontWeight: 600, letterSpacing: '0.5px' }}>GENERATE AI STRATEGY</span>
+              <span style={{ fontWeight: 600, letterSpacing: '0.5px' }}>
+                {selectedIntelligence?.eventId ? 'GENERATE AI STRATEGY' : 'SELECT INCIDENT FOR AI STRATEGY'}
+              </span>
             </button>
           </div>
 
