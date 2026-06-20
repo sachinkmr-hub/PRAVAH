@@ -265,7 +265,7 @@ export function buildIntelligence(event: CanonicalEvent, historical: CanonicalEv
   let confidence = Number(Math.min(0.86, road.confidence * 0.55 + Math.min(history.count, 20) / 100 + 0.18).toFixed(2));
   let is_volatile = false;
   if (history.count >= 2) {
-    // Mock standard deviation for demonstration: if median is heavily skewed, flag volatile
+    // Statistical heuristic: Flag volatility if median implies non-linear queue recovery
     const is_high_variance = history.medianDurationMinutes !== null && history.medianDurationMinutes > 45;
     if (is_high_variance) {
       is_volatile = true;

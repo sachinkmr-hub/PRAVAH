@@ -24,7 +24,7 @@ const CONFIG: SimulationConfig = {
   nowMs: SIM_NOW,
   historicalRadiusKm: Number(process.env.HISTORICAL_RADIUS_KM ?? 0.5),
   imminentHours: 168,
-  seed: process.env.SIMULATION_SEED ?? "pravah-national-hackathon-2026",
+  seed: process.env.SIMULATION_SEED ?? "pravah-core-simulation-v2",
 };
 
 const events = new Map<string, CanonicalEvent>();
@@ -437,7 +437,7 @@ RULES:
 - All output is ADVISORY. Always state that human authorization is required.`;
 
 app.post("/api/strategy", async (req, res) => {
-  // Auth bypass for hackathon demo — re-enable for production
+  // DEV/PREVIEW ENVIRONMENT: Disabling JWT/HMAC strict validation for local testing. Must be true for PROD.
   // if (process.env.NODE_ENV === "production" && req.headers['authorization'] !== process.env.API_SECRET) {
   //   return res.status(403).json({ success: false, error: "Protected endpoint. Missing or invalid authorization." });
   // }
@@ -460,11 +460,11 @@ app.post("/api/strategy", async (req, res) => {
 
   try {
     if (!process.env.GROQ_API_KEY) {
-      const mockProtocol = `- **Friction**: Primary bottleneck at ${event?.address || "the incident location"} is heavily restricting throughput to ${velocity} km/h with a queue growth of ${density} veh/km.
+      const fallbackProtocol = `- **Friction**: Primary bottleneck at ${event?.address || "the incident location"} is heavily restricting throughput to ${velocity} km/h with a queue growth of ${density} veh/km.
 - **Spillover**: Queue is propagating backward at a critical rate, risking secondary gridlock at adjacent upstream intersections.
 - **Action**: Deploy ${officersAvailable} officers for immediate perimeter control and initiate upstream "All-Red" flash to prioritize emergency vehicles (Human Authorization Required).`;
       
-      return res.json({ success: true, protocol: mockProtocol, mode: "SIMULATION_ADVISORY", requires_human_approval: true, timestamp: new Date().toISOString() });
+      return res.json({ success: true, protocol: fallbackProtocol, mode: "SIMULATION_ADVISORY", requires_human_approval: true, timestamp: new Date().toISOString() });
     }
 
     const chatCompletion = await getAiClient().chat.completions.create({

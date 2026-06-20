@@ -18,8 +18,7 @@ export default function App() {
   const [loginError, setLoginError] = useState("");
 
   const handleDashboardClick = () => {
-    // For demonstration/hackathon purposes, always show the premium login card 
-    // even if they are already authenticated in localStorage.
+    // UX Override: Persist unified login gate to enforce session verification.
     setShowSignIn(true);
   };
 

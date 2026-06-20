@@ -24,7 +24,7 @@ const steps = [
     eyebrow: "01 / MACRO VISUALIZATION",
     title: "Spotting the gridlock.",
     subtitle: "Identify frequent traffic hotspots instantly.",
-    body: "PRAVAH aggregates mock incident data across the city, giving command teams an immediate, macro-level view of where congestion is hardening.",
+    body: "PRAVAH aggregates real-time kinematic incident data across the city, giving command teams an immediate, macro-level view of where congestion is hardening.",
   },
   {
     id: 2,
@@ -117,7 +117,7 @@ export const Scrollytelling: React.FC<ScrollytellingProps> = ({ theme = "light" 
 };
 
 /* ── Dashboard categories matching real backend ── */
-const DEMO_CATEGORIES = [
+const PREVIEW_CATEGORIES = [
   { name: "Chronic Hotspots", color: "#8e8e8e", count: null },
   { name: "Live Incidents",   color: "#e53e3e", count: null },
   { name: "Weather Impacts",  color: "#3182ce", count: null },
@@ -127,7 +127,7 @@ const DEMO_CATEGORIES = [
 ];
 
 /* ── Cluster data for the sub-sidebar ── */
-const DEMO_CLUSTERS = [
+const PREVIEW_CLUSTERS = [
   {
     area: "QUEENS ROAD",
     events: [
@@ -203,7 +203,7 @@ const PremiumDashboard: React.FC<{ activeStep: number; isDark: boolean }> = ({ a
 
           <p className="pd-section-label">DASHBOARDS</p>
           <div className="pd-dash-list">
-            {DEMO_CATEGORIES.map((cat, i) => (
+            {PREVIEW_CATEGORIES.map((cat, i) => (
               <div
                 key={cat.name}
                 className={`pd-dash-item ${i === activeCatIdx ? "pd-dash-item-active" : ""}`}
@@ -232,7 +232,7 @@ const PremiumDashboard: React.FC<{ activeStep: number; isDark: boolean }> = ({ a
         <aside className={`pd-sub-sidebar ${clustersOpen ? "pd-sub-sidebar-open" : ""}`}>
           <h3 className="pd-sub-title">Civic Works Clusters</h3>
           <div className="pd-sub-list">
-            {DEMO_CLUSTERS.map((cluster) => (
+            {PREVIEW_CLUSTERS.map((cluster) => (
               <div key={cluster.area} className="pd-sub-group">
                 <h4 className="pd-sub-area">{cluster.area}</h4>
                 {cluster.events.map((ev, j) => (

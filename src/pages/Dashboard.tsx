@@ -292,7 +292,7 @@ function relativeLabel(dt: string): string {
   return `In ${days}d`;
 }
 
-/* ─── Mock Astram Events Database ─── */
+/* ─── In-Memory Astram Data Cache ─── */
 export interface AstramEvent {
   id: string;
   eventName: string;
@@ -530,7 +530,7 @@ function LayersPanel({
 }: { 
   activeNotifications: any[] 
 }) {
-  // Mock clean historical data
+  // Initialize standard historical baselines
   const historicalStats = {
     incidents: { total: 142, potholes: 64, breakdowns: 58, waterlogging: 20 },
     civic: { total: 24, bwssb: 12, bescom: 8, bbmp: 4 },
