@@ -208,7 +208,7 @@ function clusterEvents(source: Iterable<CanonicalEvent>, category: string, scope
 
 function chronicHotspots(scope: ReturnType<typeof queryScope>) {
   const buckets = new Map<string, CanonicalEvent[]>();
-  for (const event of historical) {
+  for (const event of events.values()) {
     if (!isInScope(event, scope)) continue;
     const key = `${event.dashCategory}:${event.latitude.toFixed(3)},${event.longitude.toFixed(3)}`;
     const bucket = buckets.get(key) ?? [];
