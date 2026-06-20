@@ -30,41 +30,41 @@ export const CivicValue: React.FC<CivicValueProps> = ({ theme = "light" }) => {
   const cards = [
     {
       id: "01",
-      label: "01 / RESPONSE",
-      title: "Sub-Second Response",
+      label: "01 / MONITORING",
+      title: "Real-Time Intelligence",
       body: [
-        "Deployment parameter calculation. Real-time LWR model updates computed natively on edge nodes within milliseconds to resolve backpressure.",
-        "A sequenced Astram event stream drives reproducible demand-capacity updates, exposing queue growth before simulated spillback reaches the next junction."
+        "Ingests live ASTraM event streams to monitor accidents, breakdowns, and traffic jams across the city as they happen.",
+        "Provides instant alerts and visualizes congestion hotspots to help authorities respond proactively before gridlock occurs."
       ],
       accent: false,
     },
     {
       id: "02",
-      label: "02 / INTEGRATION",
-      title: "O.N.D.C. Ready",
+      label: "02 / MONSOON",
+      title: "Weather Protocols",
       body: [
-        "Standardized network payload integration using secure high-speed GeoJSON interfaces operating directly with transit providers and authorities.",
-        "Contract-ready routing advisories use open geospatial payloads while preserving operator authorization and provider-specific validation."
+        "Detects water-logging incidents and instantly maps severe structural bottlenecks that trap vehicles.",
+        "Recommends tactical interventions like deploying pumps, placing barricades, and restricting two-wheeler access in high-risk zones."
       ],
       accent: false,
     },
     {
       id: "03",
-      label: "03 / LOGISTICS",
-      title: "Resource Elegance",
+      label: "03 / PLANNING",
+      title: "Civic Works & VIP",
       body: [
-        "Deterministic resource distribution metrics dynamically calculated. Deploy officers, signals, and assets solely when traffic shockwave gradients peak.",
-        "Prevent over-allocation of road resources by leveraging precise, real-time demand-capacity divergence calculations."
+        "Simulates the impact of planned lane closures and VIP movements to calculate displaced traffic volume and bleed-over risks.",
+        "Automatically coordinates green-wave routing and pushes zero-flow notifications to delivery networks."
       ],
       accent: false,
     },
     {
       id: "04",
-      label: "04 / DYNAMICS",
-      title: "Fluid Conduit Routing",
+      label: "04 / RESPONSE",
+      title: "Reactive Containment",
       body: [
-        "Kinematic-wave routing models city arteries through calibrated flow, density, capacity, and backward-propagating queue boundaries.",
-        "Harmonious multi-lane orchestration transitions urban traffic from tangled knot states to clean, parallel streamlines — measurably and continuously."
+        "Analyzes accidents and road obstructions using kinetic wave models to predict upstream shockwaves and traffic spillback.",
+        "Automatically recommends officer deployment and traffic signal adjustments to suppress downstream congestion."
       ],
       accent: true,
     },
@@ -77,13 +77,13 @@ export const CivicValue: React.FC<CivicValueProps> = ({ theme = "light" }) => {
           <div className="mb-16 text-center">
             <p className={`text-[11px] font-mono tracking-[0.2em] uppercase mb-4 ${
               isDark ? "text-sky-500" : "text-sky-600"
-            }`}>Core Architecture</p>
+            }`}>Core Capabilities</p>
             <h2 className={`text-4xl sm:text-5xl font-serif font-semibold tracking-tight ${
               isDark ? "text-slate-100" : "text-neutral-900"
-            }`}>Built on physics.</h2>
+            }`}>Actionable Intelligence.</h2>
             <p className={`mt-4 text-lg max-w-xl mx-auto font-sans ${
               isDark ? "text-slate-400" : "text-neutral-500"
-            }`}>Not black-box guesses. Reproducible simulation. Every assumption exposed.</p>
+            }`}>Transforming raw traffic data into coordinated responses for Bengaluru's daily gridlock.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
