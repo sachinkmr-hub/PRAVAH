@@ -425,9 +425,9 @@ You analyze multi-dimensional traffic intelligence and provide actionable tactic
 
 You MUST structure EVERY response into exactly 3 concise bullet points:
 
-- 🛑 **Friction**: 1-sentence analysis of the immediate bottleneck.
-- 🌊 **Spillover**: 1-sentence prediction of secondary congestion.
-- ⚡ **Action**: 1-sentence tactical recommendation (signal override, rerouting, or officer deployment).
+- **Friction**: 1-sentence analysis of the immediate bottleneck.
+- **Spillover**: 1-sentence prediction of secondary congestion.
+- **Action**: 1-sentence tactical recommendation (signal override, rerouting, or officer deployment).
 
 RULES:
 - Be EXTREMELY crisp and concise. The entire output must be under 3 sentences.
@@ -460,9 +460,9 @@ app.post("/api/strategy", async (req, res) => {
 
   try {
     if (!process.env.GROQ_API_KEY) {
-      const mockProtocol = `- 🛑 **Friction**: Primary bottleneck at ${event?.address || "the incident location"} is heavily restricting throughput to ${velocity} km/h with a queue growth of ${density} veh/km.
-- 🌊 **Spillover**: Queue is propagating backward at a critical rate, risking secondary gridlock at adjacent upstream intersections.
-- ⚡ **Action**: Deploy ${officersAvailable} officers for immediate perimeter control and initiate upstream "All-Red" flash to prioritize emergency vehicles (Human Authorization Required).`;
+      const mockProtocol = `- **Friction**: Primary bottleneck at ${event?.address || "the incident location"} is heavily restricting throughput to ${velocity} km/h with a queue growth of ${density} veh/km.
+- **Spillover**: Queue is propagating backward at a critical rate, risking secondary gridlock at adjacent upstream intersections.
+- **Action**: Deploy ${officersAvailable} officers for immediate perimeter control and initiate upstream "All-Red" flash to prioritize emergency vehicles (Human Authorization Required).`;
       
       return res.json({ success: true, protocol: mockProtocol, mode: "SIMULATION_ADVISORY", requires_human_approval: true, timestamp: new Date().toISOString() });
     }
