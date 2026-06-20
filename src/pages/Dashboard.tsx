@@ -1026,8 +1026,8 @@ export default function Dashboard() {
           </div>
         </aside>
 
-        {/* ── Sub-Locations Panel (Appears for selected category OR active pings) ── */}
-        {(activeRailIdx !== 2) && (layerClusters.length > 0 || activeNotifications.length > 0) && (
+        {/* ── Live Astram Pings Panel ── */}
+        {(activeRailIdx !== 2) && (activeNotifications.length > 0) && (
           <aside 
             className="db-sub-sidebar transition-all duration-500 ease-in-out" 
             style={{ 
@@ -1036,55 +1036,56 @@ export default function Dashboard() {
               right: selectedIntelligence ? 'auto' : '16px',
             }}
           >
-            {/* Opacity slider removed */}
-            
-            {/* Live Astram Pings Section */}
-            {activeNotifications.length > 0 && (
-              <div className="db-sub-sidebar-live-pings mb-4">
-                <h3 className="db-sub-sidebar-title" style={{ color: '#0ea5e9' }}>Live Astram Pings</h3>
-                <div className="db-sub-sidebar-list">
-                  {activeNotifications.map(n => (
-                    <button
-                      key={n.displayId}
-                      className="db-sub-event-btn group relative"
-                      style={{ border: '1px solid rgba(14, 165, 233, 0.3)', backgroundColor: 'rgba(14, 165, 233, 0.05)' }}
-                      onClick={() => {
-                        setZoomTarget([n.lat, n.lng]);
-                        setIntelligenceLoading(true);
-                        fetch(`/api/v1/event/${n.id}/intelligence`)
-                          .then(res => res.json())
-                          .then(data => {
-                            if (data.status === 'success') setSelectedIntelligence(data); selectedEventIdRef.current = data.eventId;
-                            setIntelligenceLoading(false);
-                          })
-                          .catch(err => {
-                            console.error("Failed to load int:", err);
-                            setIntelligenceLoading(false);
-                          });
+            <div className="db-sub-sidebar-live-pings mb-4">
+              <h3 className="db-sub-sidebar-title" style={{ color: '#0ea5e9' }}>Live Astram Pings</h3>
+              <div className="db-sub-sidebar-list">
+                {activeNotifications.map(n => (
+                  <button
+                    key={n.displayId}
+                    className="db-sub-event-btn group relative"
+                    style={{ border: '1px solid rgba(14, 165, 233, 0.3)', backgroundColor: 'rgba(14, 165, 233, 0.05)' }}
+                    onClick={() => {
+                      setZoomTarget([n.lat, n.lng]);
+                      setIntelligenceLoading(true);
+                      fetch(`/api/v1/event/${n.id}/intelligence`)
+                        .then(res => res.json())
+                        .then(data => {
+                          if (data.status === 'success') setSelectedIntelligence(data); selectedEventIdRef.current = data.eventId;
+                          setIntelligenceLoading(false);
+                        })
+                        .catch(err => {
+                          console.error("Failed to load int:", err);
+                          setIntelligenceLoading(false);
+                        });
+                    }}
+                  >
+                    <span
+                      className="db-sub-event-dot"
+                      style={{ backgroundColor: "#0ea5e9", boxShadow: "0 0 8px #0ea5e9" }}
+                    />
+                    <div className="db-sub-event-info pr-6">
+                      <span className="db-sub-event-name">{n.street} - {n.eventName}</span>
+                      <span className="db-sub-event-time" style={{ color: '#7dd3fc' }}>Just Now</span>
+                    </div>
+                    <div 
+                      className="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 hover:bg-black/30 rounded-full text-slate-400 hover:text-red-400"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveNotifications(prev => prev.filter(p => p.displayId !== n.displayId));
                       }}
                     >
-                      <span
-                        className="db-sub-event-dot"
-                        style={{ backgroundColor: "#0ea5e9", boxShadow: "0 0 8px #0ea5e9" }}
-                      />
-                      <div className="db-sub-event-info pr-6">
-                        <span className="db-sub-event-name">{n.street} - {n.eventName}</span>
-                        <span className="db-sub-event-time" style={{ color: '#7dd3fc' }}>Just Now</span>
-                      </div>
-                      <div 
-                        className="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 hover:bg-black/30 rounded-full text-slate-400 hover:text-red-400"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setActiveNotifications(prev => prev.filter(p => p.displayId !== n.displayId));
-                        }}
-                      >
-                        <X size={14} />
-                      </div>
-                    </button>
-                  ))}
-                </div>
+                      <X size={14} />
+                    </div>
+                  </button>
+                ))}
               </div>
-            )}
+            </div>
+          </aside>
+        )}
+
+        {/* ── Sub-Locations Panel (Appears for selected category OR active pings) ── */}
+        {(activeRailIdx !== 2) && (layerClusters.length > 0) && (!selectedIntelligence || hoveredDashboard === activeDashboard) && (
+          <aside className="db-sub-sidebar animate-fade-right" style={{ background: `rgba(255, 255, 255, ${subSidebarOpacity})`, left: '338px' }}>
 
             {layerClusters.length > 0 && (
               <>
