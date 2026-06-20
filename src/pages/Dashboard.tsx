@@ -250,6 +250,8 @@ interface EventIntelligence {
     cascade_risk_nodes?: string[];
     recommended_diversion?: string;
     rationale?: string;
+    is_override?: boolean;
+    override_rationale?: string;
   };
   kinematic_state?: {
     baseline_demand_vph: number;
