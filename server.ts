@@ -103,9 +103,28 @@ function isInScope(event: CanonicalEvent, scope: ReturnType<typeof queryScope>):
   return haversineKm(event.latitude, event.longitude, scope.lat, scope.lng) <= scope.radiusKm;
 }
 
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 async function loadDataset(): Promise<void> {
-  const csvPath = path.join(process.cwd(), "cleaned_astram_events.csv");
-  if (!fs.existsSync(csvPath)) throw new Error(`Dataset not found: ${csvPath}`);
+  const possiblePaths = [
+    path.join(process.cwd(), "cleaned_astram_events.csv"),
+    path.resolve("cleaned_astram_events.csv"),
+    path.join(__dirname, "cleaned_astram_events.csv"),
+    path.join(__dirname, "..", "cleaned_astram_events.csv"),
+    "cleaned_astram_events.csv"
+  ];
+  let csvPath = "";
+  for (const p of possiblePaths) {
+    if (fs.existsSync(p)) {
+      csvPath = p;
+      break;
+    }
+  }
+  if (!csvPath) throw new Error(`Dataset not found in any of the expected locations.`);
+  
   await new Promise<void>((resolve, reject) => {
     const readStream = fs.createReadStream(csvPath);
     const csvStream = csv();
@@ -347,7 +366,19 @@ app.get("/api/v1/events/stream", (req, res) => {
     });
     res.write(`event: connected\ndata: ${JSON.stringify({ mode: "SIMULATION", model_version: "pravah-sim-2.0.0" })}\n\n`);
     sseClients.add(res);
-    req.on("close", () => sseClients.delete(res));
+
+    let interval: NodeJS.Timeout | null = null;
+    if (process.env.VERCEL === "1") {
+      interval = setInterval(() => {
+        const payload = nextSimulatedEvent();
+        if (payload) res.write(`id: ${payload.sequence}\nevent: astram.incident\ndata: ${JSON.stringify(payload)}\n\n`);
+      }, Number(process.env.SIMULATION_INTERVAL_MS ?? 5000));
+    }
+
+    req.on("close", () => {
+      if (interval) clearInterval(interval);
+      sseClients.delete(res);
+    });
   } catch (error) {
     res.status(500).json({ error: "Failed to establish stream" });
   }
