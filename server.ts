@@ -488,7 +488,12 @@ async function start() {
   process.once("SIGTERM", shutdown);
 }
 
-start().catch((error) => {
-  console.error(JSON.stringify({ level: "fatal", message: "startup_failed", detail: error instanceof Error ? error.message : "unknown" }));
-  process.exit(1);
-});
+export { app, loadDataset };
+export const isReady = () => ready;
+
+if (process.env.VERCEL !== "1") {
+  start().catch((error) => {
+    console.error(JSON.stringify({ level: "fatal", message: "startup_failed", detail: error instanceof Error ? error.message : "unknown" }));
+    process.exit(1);
+  });
+}
