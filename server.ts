@@ -108,17 +108,11 @@ function isInScope(event: CanonicalEvent, scope: ReturnType<typeof queryScope>):
   return haversineKm(event.latitude, event.longitude, scope.lat, scope.lng) <= scope.radiusKm;
 }
 
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 async function loadDataset(): Promise<void> {
   const possiblePaths = [
     path.join(process.cwd(), "cleaned_astram_events.csv"),
-    path.resolve("cleaned_astram_events.csv"),
-    path.join(__dirname, "cleaned_astram_events.csv"),
-    path.join(__dirname, "..", "cleaned_astram_events.csv"),
+    path.join(process.cwd(), "api", "cleaned_astram_events.csv"),
+    path.join(process.cwd(), "..", "cleaned_astram_events.csv"),
     "cleaned_astram_events.csv"
   ];
   let csvPath = "";
