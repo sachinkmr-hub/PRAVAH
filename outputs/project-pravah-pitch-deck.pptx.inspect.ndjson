@@ -1,0 +1,255 @@
+{"kind":"deck","id":"pr/7zulmu","name":"Deck"}
+{"kind":"layout","layoutId":"24ac1c2e-c908-4b86-af24-37cd874d64f4","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"8cc1857c-c591-46db-9d00-c03e9bfd98ea","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/uqsdvp","slide":1,"title":"THE CORE PROBLEM","textShapes":12}
+{"kind":"shape","id":"sh/gfmlkjm1","slide":1,"bbox":[0,0,1280,720]}
+{"kind":"shape","id":"sh/90je9cvi","slide":1,"bbox":[570,88,600,470]}
+{"kind":"shape","id":"sh/y1kre1w7","slide":1,"bbox":[590,112,560,0]}
+{"kind":"shape","id":"sh/rmhk3q5o","slide":1,"bbox":[590,154,560,18.51]}
+{"kind":"shape","id":"sh/g7adsji5","slide":1,"bbox":[590,196,560,20]}
+{"kind":"shape","id":"sh/9s36hcrm","slide":1,"bbox":[590,238,560,3.1]}
+{"kind":"shape","id":"sh/yxobm58z","slide":1,"bbox":[590,280,560,-16.65]}
+{"kind":"shape","id":"sh/nih4byhg","slide":1,"bbox":[590,322,560,-21.1]}
+{"kind":"shape","id":"sh/72x4nap4","slide":1,"bbox":[590,364,560,-6.15]}
+{"kind":"shape","id":"sh/ih4byhgn","slide":1,"bbox":[590,406,560,14.45]}
+{"kind":"shape","id":"sh/p8nqxs72","slide":1,"bbox":[590,448,560,21.77]}
+{"kind":"shape","id":"sh/0nuxc3yl","slide":1,"bbox":[590,490,560,9.07]}
+{"kind":"shape","id":"sh/7ed8bat4","slide":1,"bbox":[590,532,560,-11.97]}
+{"kind":"shape","id":"sh/itgfmlkj","slide":1,"bbox":[590,574,560,-22]}
+{"kind":"shape","id":"sh/pkzupwb2","slide":1,"bbox":[606,104,28,442]}
+{"kind":"shape","id":"sh/0z61032l","slide":1,"bbox":[678,104,15.13,442]}
+{"kind":"shape","id":"sh/7qpg3ex0","slide":1,"bbox":[750,104,-11.65,442]}
+{"kind":"shape","id":"sh/i5sneloj","slide":1,"bbox":[822,104,-27.72,442]}
+{"kind":"shape","id":"sh/m94fu18j","slide":1,"bbox":[894,104,-18.3,442]}
+{"kind":"shape","id":"sh/fu18jqh0","slide":1,"bbox":[966,104,7.94,442]}
+{"kind":"shape","id":"sh/4fu18jqh","slide":1,"bbox":[1038,104,26.88,442]}
+{"kind":"shape","id":"sh/x0nuxc3y","slide":1,"bbox":[1110,104,21.11,442]}
+{"kind":"shape","id":"sh/qxs72x4n","slide":1,"bbox":[1182,104,-4.07,442]}
+{"kind":"shape","id":"sh/fil0rqd4","slide":1,"bbox":[688,198,164,164]}
+{"kind":"shape","id":"sh/83itgfml","slide":1,"bbox":[624,134,292,292]}
+{"kind":"shape","id":"sh/xobm58z2","slide":1,"bbox":[544,54,452,452]}
+{"kind":"shape","id":"sh/mtwra5gb","slide":1,"bbox":[440,-50,660,660]}
+{"kind":"shape","id":"sh/fepkzupw","slide":1,"bbox":[756,266,28,28]}
+{"kind":"shape","id":"sh/5gbq1ory","slide":1,"bbox":[775,282,250,-180]}
+{"kind":"shape","id":"sh/cvixczed","slide":1,"bbox":[775,282,276,-128]}
+{"kind":"shape","id":"sh/nap4r65w","slide":1,"bbox":[775,282,302,-76]}
+{"kind":"shape","id":"sh/upwb2hwf","slide":1,"bbox":[775,282,328,-24]}
+{"kind":"shape","id":"sh/54zidony","slide":1,"bbox":[775,282,354,28]}
+{"kind":"shape","id":"sh/cj6tovah","slide":1,"bbox":[775,282,380,80]}
+{"kind":"shape","id":"sh/nyd0z610","slide":1,"bbox":[775,282,406,132]}
+{"kind":"shape","id":"sh/udg7adsj","slide":1,"bbox":[775,282,432,184]}
+{"kind":"textbox","id":"sh/1032lszq","slide":1,"text":"THE CORE PROBLEM","textPreview":"THE CORE PROBLEM","textChars":16,"textLines":1,"bbox":[58,34,360,24]}
+{"kind":"textbox","id":"sh/cfa9w3m9","slide":1,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[1182,34,42,22]}
+{"kind":"shape","id":"sh/g7adsji5","slide":1,"bbox":[58,688,160,0]}
+{"kind":"textbox","id":"sh/9s36hcrm","slide":1,"text":"PROJECT PRAVAH / Deterministic urban response simulation","textPreview":"PROJECT PRAVAH / Deterministic urban response simulation","textChars":56,"textLines":1,"bbox":[230,678,560,24]}
+{"kind":"textbox","id":"sh/y1kre1w7","slide":1,"text":"The Inflow Paradox","textPreview":"The Inflow Paradox","textChars":18,"textLines":1,"bbox":[58,98,510,120]}
+{"kind":"textbox","id":"sh/rmhk3q5o","slide":1,"text":"You cannot clear a crash if traffic keeps entering the conflict link at urban approach speeds.","textPreview":"You cannot clear a crash if traffic keeps entering the conflict link at urban approach speeds.","textChars":94,"textLines":1,"bbox":[62,225,470,68]}
+{"kind":"shape","id":"sh/gfmlkjm1","slide":1,"bbox":[62,338,418,124]}
+{"kind":"textbox","id":"sh/90je9cvi","slide":1,"text":"Failure 01","textPreview":"Failure 01","textChars":10,"textLines":1,"bbox":[86,360,100,20]}
+{"kind":"textbox","id":"sh/yd0z6103","slide":1,"text":"Inflow keeps feeding the shockwave","textPreview":"Inflow keeps feeding the shockwave","textChars":34,"textLines":1,"bbox":[86,388,330,44]}
+{"kind":"textbox","id":"sh/rytsvu9k","slide":1,"text":"Manual response clears the obstacle while the queue continues to grow upstream.","textPreview":"Manual response clears the obstacle while the queue continues to grow upstream.","textChars":79,"textLines":1,"bbox":[86,434,350,28]}
+{"kind":"shape","id":"sh/gr2p8nqx","slide":1,"bbox":[62,484,418,124]}
+{"kind":"textbox","id":"sh/9cvixcze","slide":1,"text":"Failure 02","textPreview":"Failure 02","textChars":10,"textLines":1,"bbox":[86,506,100,20]}
+{"kind":"textbox","id":"sh/vahoza1g","slide":1,"text":"Over-deployment burns capacity","textPreview":"Over-deployment burns capacity","textChars":30,"textLines":1,"bbox":[86,534,340,44]}
+{"kind":"textbox","id":"sh/6tovahoz","slide":1,"text":"Heavy logistics can chase minor incidents while major choke points fail.","textPreview":"Heavy logistics can chase minor incidents while major choke points fail.","textChars":72,"textLines":1,"bbox":[86,580,350,26]}
+{"kind":"shape","id":"sh/dg7adsji","slide":1,"bbox":[880,604,230,32]}
+{"kind":"textbox","id":"sh/ovahoza1","slide":1,"text":"HIGH-STAKES LOCAL CASCADE","textPreview":"HIGH-STAKES LOCAL CASCADE","textChars":25,"textLines":1,"bbox":[880,611,230,18]}
+{"kind":"image","id":"im/m1cfa9w3","slide":1,"name":"","geometry":"rect","alt":"Bengaluru map preview","bbox":[0,0,1280,720]}
+{"kind":"notes","id":"nt/uqsdvp","slide":1,"text":""}
+{"kind":"slide","id":"sl/85od4a","slide":2,"title":"THE PROPOSED SOLUTION","textShapes":13}
+{"kind":"shape","id":"sh/szqtcj6t","slide":2,"bbox":[0,0,1280,720]}
+{"kind":"textbox","id":"sh/lkjm1cfa","slide":2,"text":"THE PROPOSED SOLUTION","textPreview":"THE PROPOSED SOLUTION","textChars":21,"textLines":1,"bbox":[58,34,360,24]}
+{"kind":"textbox","id":"sh/ahoza1gv","slide":2,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[1182,34,42,22]}
+{"kind":"shape","id":"sh/32lszqtc","slide":2,"bbox":[58,688,160,0]}
+{"kind":"textbox","id":"sh/sneloj2t","slide":2,"text":"PROJECT PRAVAH / Deterministic urban response simulation","textPreview":"PROJECT PRAVAH / Deterministic urban response simulation","textChars":56,"textLines":1,"bbox":[230,678,560,24]}
+{"kind":"textbox","id":"sh/l87ed8ba","slide":2,"text":"Project PRAVAH","textPreview":"Project PRAVAH","textChars":14,"textLines":1,"bbox":[58,92,440,70]}
+{"kind":"textbox","id":"sh/e9cvixcz","slide":2,"text":"A Hybrid Network & Heuristic Decision Support System for tactical containment, resource math, and operator-reviewed mitigation.","textPreview":"A Hybrid Network & Heuristic Decision Support System for tactical containment, resource math, and operator-reviewed mitigation.","textChars":127,"textLines":1,"bbox":[62,174,458,78]}
+{"kind":"shape","id":"sh/3q5o7qpg","slide":2,"bbox":[62,274,330,32]}
+{"kind":"textbox","id":"sh/neloj2t8","slide":2,"text":"SIMULATION-ONLY / HUMAN APPROVAL REQUIRED","textPreview":"SIMULATION-ONLY / HUMAN APPROVAL REQUIRED","textChars":41,"textLines":1,"bbox":[62,281,330,18]}
+{"kind":"shape","id":"sh/5kb6xkf6","slide":2,"bbox":[504,114,672,456]}
+{"kind":"shape","id":"sh/czed8v6p","slide":2,"bbox":[62,350,392,54]}
+{"kind":"textbox","id":"sh/nqxs72x4","slide":2,"text":"Physics","textPreview":"Physics","textChars":7,"textLines":1,"bbox":[82,363,100,20]}
+{"kind":"textbox","id":"sh/u54zidon","slide":2,"text":"Bounded ghost queues, residual capacity, shockwave velocity.","textPreview":"Bounded ghost queues, residual capacity, shockwave velocity.","textChars":60,"textLines":1,"bbox":[184,363,244,22]}
+{"kind":"shape","id":"sh/5sneloj2","slide":2,"bbox":[62,420,392,54]}
+{"kind":"textbox","id":"sh/cbulwval","slide":2,"text":"Behavior","textPreview":"Behavior","textChars":8,"textLines":1,"bbox":[82,433,100,20]}
+{"kind":"textbox","id":"sh/nuxc3ylc","slide":2,"text":"Zonal matrix: dense grid, tech park, arterial response.","textPreview":"Zonal matrix: dense grid, tech park, arterial response.","textChars":55,"textLines":1,"bbox":[184,433,244,22]}
+{"kind":"shape","id":"sh/y90je9cv","slide":2,"bbox":[62,490,392,54]}
+{"kind":"textbox","id":"sh/2lszqtcj","slide":2,"text":"Logistics","textPreview":"Logistics","textChars":9,"textLines":1,"bbox":[82,503,100,20]}
+{"kind":"textbox","id":"sh/v6psfil0","slide":2,"text":"Officers, barricades, upstream node, route override.","textPreview":"Officers, barricades, upstream node, route override.","textChars":52,"textLines":1,"bbox":[184,503,244,22]}
+{"kind":"textbox","id":"sh/knih4byh","slide":2,"text":"We don't just put dots on a map. We calculate physics, behavior, and logistics to restore flow.","textPreview":"We don't just put dots on a map. We calculate physics, behavior, and logistics to restore flow.","textChars":95,"textLines":1,"bbox":[540,586,588,52]}
+{"kind":"image","id":"im/eloj2t83","slide":2,"name":"","geometry":"rect","alt":"Fluid stream motif","bbox":[0,492,1280,180]}
+{"kind":"image","id":"im/tcj6tova","slide":2,"name":"","geometry":"roundRect","alt":"Live PRAVAH dashboard screenshot","bbox":[530,82,620,456]}
+{"kind":"notes","id":"nt/85od4a","slide":2,"text":""}
+{"kind":"slide","id":"sl/eby4ux","slide":3,"title":"THE MASTER WORKFLOW","textShapes":24}
+{"kind":"shape","id":"sh/za1gvy90","slide":3,"bbox":[0,0,1280,720]}
+{"kind":"textbox","id":"sh/svu9knih","slide":3,"text":"THE MASTER WORKFLOW","textPreview":"THE MASTER WORKFLOW","textChars":19,"textLines":1,"bbox":[58,34,360,24]}
+{"kind":"textbox","id":"sh/hgn29gr2","slide":3,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[1182,34,42,22]}
+{"kind":"shape","id":"sh/a1gvy90j","slide":3,"bbox":[58,688,160,0]}
+{"kind":"textbox","id":"sh/zidonyd0","slide":3,"text":"PROJECT PRAVAH / Deterministic urban response simulation","textPreview":"PROJECT PRAVAH / Deterministic urban response simulation","textChars":56,"textLines":1,"bbox":[230,678,560,24]}
+{"kind":"textbox","id":"sh/s36hcrmh","slide":3,"text":"From incident signal to containment decision","textPreview":"From incident signal to containment decision","textChars":44,"textLines":1,"bbox":[58,82,880,58]}
+{"kind":"textbox","id":"sh/hoza1gvy","slide":3,"text":"The core engine stays deterministic and auditable; Phase 2 adds live telemetry and automated handshakes only after governance validation.","textPreview":"The core engine stays deterministic and auditable; Phase 2 adds live telemetry and automated handshakes only after governance validation.","textChars":137,"textLines":1,"bbox":[62,138,850,34]}
+{"kind":"shape","id":"sh/a5gbq1or","slide":3,"bbox":[52,296,180,138]}
+{"kind":"textbox","id":"sh/3m94fu18","slide":3,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[68,310,34,20]}
+{"kind":"textbox","id":"sh/zidonyd0","slide":3,"text":"Ingestion","textPreview":"Ingestion","textChars":9,"textLines":1,"bbox":[68,338,148,34]}
+{"kind":"textbox","id":"sh/a1gvy90j","slide":3,"text":"Zonal Behavioral Matrix mapping","textPreview":"Zonal Behavioral Matrix mapping","textChars":31,"textLines":1,"bbox":[68,378,148,44]}
+{"kind":"shape","id":"sh/hoza1gvy","slide":3,"bbox":[274,296,180,138]}
+{"kind":"textbox","id":"sh/s36hcrmh","slide":3,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[290,310,34,20]}
+{"kind":"textbox","id":"sh/za1gvy90","slide":3,"text":"Physics Engine","textPreview":"Physics Engine","textChars":14,"textLines":1,"bbox":[290,338,148,34]}
+{"kind":"textbox","id":"sh/ap4r65wj","slide":3,"text":"Bounded Ghost Queue + resource math","textPreview":"Bounded Ghost Queue + resource math","textChars":35,"textLines":1,"bbox":[290,378,148,44]}
+{"kind":"shape","id":"sh/hgn29gr2","slide":3,"bbox":[496,296,180,138]}
+{"kind":"textbox","id":"sh/svu9knih","slide":3,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[512,310,34,20]}
+{"kind":"textbox","id":"sh/3ylc7u54","slide":3,"text":"Arbitration & Routing","textPreview":"Arbitration & Routing","textChars":21,"textLines":1,"bbox":[512,338,148,34]}
+{"kind":"textbox","id":"sh/adsji5sn","slide":3,"text":"Priority Matrix + OSRM drive-time check","textPreview":"Priority Matrix + OSRM drive-time check","textChars":39,"textLines":1,"bbox":[512,378,148,44]}
+{"kind":"shape","id":"sh/idonyd0z","slide":3,"bbox":[718,296,180,138]}
+{"kind":"textbox","id":"sh/byhgn29g","slide":3,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[734,310,34,20]}
+{"kind":"textbox","id":"sh/0je9cvix","slide":3,"text":"Mitigation","textPreview":"Mitigation","textChars":10,"textLines":1,"bbox":[734,338,148,34]}
+{"kind":"textbox","id":"sh/t47y1kre","slide":3,"text":"ATCS upstream gating + UI dispatch","textPreview":"ATCS upstream gating + UI dispatch","textChars":34,"textLines":1,"bbox":[734,378,148,44]}
+{"kind":"shape","id":"sh/il0rqd4v","slide":3,"bbox":[940,296,180,138]}
+{"kind":"textbox","id":"sh/b6xkf6dc","slide":3,"text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[956,310,34,20]}
+{"kind":"textbox","id":"sh/0rqd4vmt","slide":3,"text":"Learning","textPreview":"Learning","textChars":8,"textLines":1,"bbox":[956,338,148,34]}
+{"kind":"textbox","id":"sh/tcj6tova","slide":3,"text":"Objective Delta-T feedback loop","textPreview":"Objective Delta-T feedback loop","textChars":31,"textLines":1,"bbox":[956,378,148,44]}
+{"kind":"shape","id":"sh/ixczed8v","slide":3,"bbox":[232,365,42,0]}
+{"kind":"shape","id":"sh/bi9s36hc","slide":3,"bbox":[454,365,42,0]}
+{"kind":"shape","id":"sh/h0fepkzu","slide":3,"bbox":[676,365,42,0]}
+{"kind":"shape","id":"sh/sfil0rqd","slide":3,"bbox":[898,365,42,0]}
+{"kind":"shape","id":"sh/zupwb2hw","slide":3,"bbox":[232,366,42,0]}
+{"kind":"shape","id":"sh/a9w3m94f","slide":3,"bbox":[264,360,10,6]}
+{"kind":"shape","id":"sh/hcrmhk3q","slide":3,"bbox":[264,372,10,-6]}
+{"kind":"shape","id":"sh/orytsvu9","slide":3,"bbox":[454,366,42,0]}
+{"kind":"shape","id":"sh/z61032ls","slide":3,"bbox":[486,360,10,6]}
+{"kind":"shape","id":"sh/al87ed8b","slide":3,"bbox":[486,372,10,-6]}
+{"kind":"shape","id":"sh/hk3q5o7q","slide":3,"bbox":[676,366,42,0]}
+{"kind":"shape","id":"sh/oza1gvy9","slide":3,"bbox":[708,360,10,6]}
+{"kind":"shape","id":"sh/w7mp0bi9","slide":3,"bbox":[708,372,10,-6]}
+{"kind":"shape","id":"sh/psfil0rq","slide":3,"bbox":[898,366,42,0]}
+{"kind":"shape","id":"sh/e1w7mp0b","slide":3,"bbox":[930,360,10,6]}
+{"kind":"shape","id":"sh/7mp0bi9s","slide":3,"bbox":[930,372,10,-6]}
+{"kind":"shape","id":"sh/wval87ed","slide":3,"bbox":[266,526,770,118]}
+{"kind":"textbox","id":"sh/pg3ex0nu","slide":3,"text":"Phase 2 Roadmap","textPreview":"Phase 2 Roadmap","textChars":15,"textLines":1,"bbox":[300,544,210,24]}
+{"kind":"shape","id":"sh/epkzupwb","slide":3,"bbox":[310,584,286,40]}
+{"kind":"textbox","id":"sh/7adsji5s","slide":3,"text":"Edge-node CV + live CCTV telemetry","textPreview":"Edge-node CV + live CCTV telemetry","textChars":34,"textLines":1,"bbox":[326,597,250,16]}
+{"kind":"shape","id":"sh/wra5gbq1","slide":3,"bbox":[660,584,318,40]}
+{"kind":"textbox","id":"sh/lc7u54zi","slide":3,"text":"Automated ATCS handshake / ONDC API","textPreview":"Automated ATCS handshake / ONDC API","textChars":35,"textLines":1,"bbox":[684,597,270,16]}
+{"kind":"shape","id":"sh/bat47y1k","slide":3,"bbox":[142,436,190,136]}
+{"kind":"shape","id":"sh/mp0bi9s3","slide":3,"bbox":[810,436,28,136]}
+{"kind":"shape","id":"sh/tgfmlkjm","slide":3,"bbox":[1038,104,138,32]}
+{"kind":"textbox","id":"sh/4vmtwra5","slide":3,"text":"MONEY SLIDE","textPreview":"MONEY SLIDE","textChars":11,"textLines":1,"bbox":[1038,111,138,18]}
+{"kind":"notes","id":"nt/eby4ux","slide":3,"text":""}
+{"kind":"slide","id":"sl/5pw4qe","slide":4,"title":"WORKING EXPLANATION / PART 1","textShapes":13}
+{"kind":"textbox","id":"sh/qtcj6tov","slide":4,"text":"WORKING EXPLANATION / PART 1","textPreview":"WORKING EXPLANATION / PART 1","textChars":28,"textLines":1,"bbox":[58,34,360,24]}
+{"kind":"textbox","id":"sh/1gvy90je","slide":4,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[1182,34,42,22]}
+{"kind":"shape","id":"sh/8z25kb6x","slide":4,"bbox":[58,688,160,0]}
+{"kind":"textbox","id":"sh/fmlkjm1c","slide":4,"text":"PROJECT PRAVAH / Deterministic urban response simulation","textPreview":"PROJECT PRAVAH / Deterministic urban response simulation","textChars":56,"textLines":1,"bbox":[230,678,560,24]}
+{"kind":"textbox","id":"sh/q1orytsv","slide":4,"text":"Physics & routing: bounded, topological, reproducible","textPreview":"Physics & routing: bounded, topological, reproducible","textChars":53,"textLines":1,"bbox":[58,82,940,58]}
+{"kind":"shape","id":"sh/xs72x4na","slide":4,"bbox":[58,158,520,446]}
+{"kind":"textbox","id":"sh/87ed8bat","slide":4,"text":"Zonal profile + resource request","textPreview":"Zonal profile + resource request","textChars":32,"textLines":1,"bbox":[86,184,360,24]}
+{"kind":"textbox","id":"sh/fyxobm58","slide":4,"text":"{\n  \"road\": { \"class\": \"ARTERIAL\", \"lanes\": 6,\n    \"zonal_behavior\": \"DENSE_GRID\",\n    \"capacity_per_lane_vph\": 1750 },\n  \"kinematic_state\": {\n    \"q_ghost_pcu\": 3600,\n    \"q_excess_pcu\": 420,\n    \"shockwave_speed_kmh\": -8.7\n  },\n  \"deployment\": {\n    \"officers_required\": 8,\n    \"barricades_required\": 14,\n    \"requires_human_approval\": true\n  }\n}","textPreview":"{ |   \"road\": { \"class\": \"ARTERIAL\", \"lanes\": 6, |     \"zonal_behavior\": \"DENSE_GRID\", |     \"capacity_per_lane_vph\": 1750 }, |   \"kinema...","textChars":348,"textLines":15,"bbox":[86,226,450,296]}
+{"kind":"textbox","id":"sh/qd4vmtwr","slide":4,"text":"Implementation note: MVP uses a 600 PCU/lane simulation storage cap; IRC:64 calibration is a governance-calibration step, not claimed live sensor truth.","textPreview":"Implementation note: MVP uses a 600 PCU/lane simulation storage cap; IRC:64 calibration is a governance-calibration step, not claimed liv...","textChars":152,"textLines":1,"bbox":[86,534,440,40]}
+{"kind":"shape","id":"sh/h0fepkzu","slide":4,"bbox":[706,444,260,-190]}
+{"kind":"shape","id":"sh/a9w3m94f","slide":4,"bbox":[700,246,270,210]}
+{"kind":"textbox","id":"sh/zupwb2hw","slide":4,"text":"Haversine shortcut","textPreview":"Haversine shortcut","textChars":18,"textLines":1,"bbox":[678,508,210,24]}
+{"kind":"shape","id":"sh/orytsvu9","slide":4,"bbox":[748,438,115,-30]}
+{"kind":"shape","id":"sh/hcrmhk3q","slide":4,"bbox":[862,408,88,60]}
+{"kind":"textbox","id":"sh/al87ed8b","slide":4,"text":"OSRM actual drive-time route","textPreview":"OSRM actual drive-time route","textChars":28,"textLines":1,"bbox":[918,508,240,24]}
+{"kind":"shape","id":"sh/z61032ls","slide":4,"bbox":[638,548,224,84]}
+{"kind":"textbox","id":"sh/oza1gvy9","slide":4,"text":"Override trigger","textPreview":"Override trigger","textChars":16,"textLines":1,"bbox":[656,564,188,20]}
+{"kind":"textbox","id":"sh/hk3q5o7q","slide":4,"text":"Priority > 0.65","textPreview":"Priority > 0.65","textChars":15,"textLines":1,"bbox":[656,588,188,32]}
+{"kind":"shape","id":"sh/1w7mp0bi","slide":4,"bbox":[888,548,224,84]}
+{"kind":"textbox","id":"sh/8bat47y1","slide":4,"text":"Jurisdiction rule","textPreview":"Jurisdiction rule","textChars":17,"textLines":1,"bbox":[906,564,188,20]}
+{"kind":"textbox","id":"sh/jqh0fepk","slide":4,"text":"Fastest QRT","textPreview":"Fastest QRT","textChars":11,"textLines":1,"bbox":[906,588,188,32]}
+{"kind":"image","id":"im/b6xkf6dc","slide":4,"name":"","geometry":"roundRect","alt":"Bengaluru topology map","bbox":[640,164,500,340]}
+{"kind":"notes","id":"nt/5pw4qe","slide":4,"text":""}
+{"kind":"slide","id":"sl/z9lf2e","slide":5,"title":"WORKING EXPLANATION / PART 2","textShapes":20}
+{"kind":"textbox","id":"sh/wfyxobm5","slide":5,"text":"WORKING EXPLANATION / PART 2","textPreview":"WORKING EXPLANATION / PART 2","textChars":28,"textLines":1,"bbox":[58,34,360,24]}
+{"kind":"textbox","id":"sh/7u54zido","slide":5,"text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[1182,34,42,22]}
+{"kind":"shape","id":"sh/ed8bat47","slide":5,"bbox":[58,688,160,0]}
+{"kind":"textbox","id":"sh/lc7u54zi","slide":5,"text":"PROJECT PRAVAH / Deterministic urban response simulation","textPreview":"PROJECT PRAVAH / Deterministic urban response simulation","textChars":56,"textLines":1,"bbox":[230,678,560,24]}
+{"kind":"textbox","id":"sh/wra5gbq1","slide":5,"text":"Mitigation & UI: operator-in-the-loop containment","textPreview":"Mitigation & UI: operator-in-the-loop containment","textChars":49,"textLines":1,"bbox":[58,82,900,58]}
+{"kind":"textbox","id":"sh/36hcrmhk","slide":5,"text":"PRAVAH recommends upstream metering and dispatch resources; it does not directly seize police, signal, or navigation controls.","textPreview":"PRAVAH recommends upstream metering and dispatch resources; it does not directly seize police, signal, or navigation controls.","textChars":126,"textLines":1,"bbox":[62,136,860,30]}
+{"kind":"shape","id":"sh/eloj2t83","slide":5,"bbox":[62,188,680,420]}
+{"kind":"shape","id":"sh/pg3ex0nu","slide":5,"bbox":[86,216,168,362]}
+{"kind":"textbox","id":"sh/wval87ed","slide":5,"text":"COMMAND","textPreview":"COMMAND","textChars":7,"textLines":1,"bbox":[110,238,110,20]}
+{"kind":"shape","id":"sh/6hcrmhk3","slide":5,"bbox":[106,274,124,34]}
+{"kind":"textbox","id":"sh/z25kb6xk","slide":5,"text":"Live Incidents","textPreview":"Live Incidents","textChars":14,"textLines":1,"bbox":[118,284,100,14]}
+{"kind":"shape","id":"sh/onyd0z61","slide":5,"bbox":[106,328,124,34]}
+{"kind":"textbox","id":"sh/d8v6psfi","slide":5,"text":"Weather Impacts","textPreview":"Weather Impacts","textChars":15,"textLines":1,"bbox":[118,338,100,14]}
+{"kind":"shape","id":"sh/6tovahoz","slide":5,"bbox":[106,382,124,34]}
+{"kind":"textbox","id":"sh/vahoza1g","slide":5,"text":"Civic Works","textPreview":"Civic Works","textChars":11,"textLines":1,"bbox":[118,392,100,14]}
+{"kind":"shape","id":"sh/ovahoza1","slide":5,"bbox":[106,436,124,34]}
+{"kind":"textbox","id":"sh/dg7adsji","slide":5,"text":"QRT Dispatch","textPreview":"QRT Dispatch","textChars":12,"textLines":1,"bbox":[118,446,100,14]}
+{"kind":"shape","id":"sh/61032lsz","slide":5,"bbox":[278,216,430,242]}
+{"kind":"shape","id":"sh/vmtwra5g","slide":5,"bbox":[302,238,382,194]}
+{"kind":"shape","id":"sh/nqxs72x4","slide":5,"bbox":[322,262,342,0]}
+{"kind":"shape","id":"sh/u54zidon","slide":5,"bbox":[322,304,342,18.51]}
+{"kind":"shape","id":"sh/5sneloj2","slide":5,"bbox":[322,346,342,20]}
+{"kind":"shape","id":"sh/cbulwval","slide":5,"bbox":[322,388,342,3.1]}
+{"kind":"shape","id":"sh/neloj2t8","slide":5,"bbox":[322,430,342,-16.65]}
+{"kind":"shape","id":"sh/ytsvu9kn","slide":5,"bbox":[322,472,342,-21.1]}
+{"kind":"shape","id":"sh/5kb6xkf6","slide":5,"bbox":[322,514,342,-6.15]}
+{"kind":"shape","id":"sh/czed8v6p","slide":5,"bbox":[322,556,342,14.45]}
+{"kind":"shape","id":"sh/n29gr2p8","slide":5,"bbox":[322,598,342,21.77]}
+{"kind":"shape","id":"sh/yhgn29gr","slide":5,"bbox":[322,640,342,9.07]}
+{"kind":"shape","id":"sh/8jqh0fep","slide":5,"bbox":[322,682,342,-11.97]}
+{"kind":"shape","id":"sh/x4nap4r6","slide":5,"bbox":[322,724,342,-22]}
+{"kind":"shape","id":"sh/qd4vmtwr","slide":5,"bbox":[338,254,28,166]}
+{"kind":"shape","id":"sh/fyxobm58","slide":5,"bbox":[410,254,15.13,166]}
+{"kind":"shape","id":"sh/8v6psfil","slide":5,"bbox":[482,254,-11.65,166]}
+{"kind":"shape","id":"sh/xczed8v6","slide":5,"bbox":[554,254,-27.72,166]}
+{"kind":"shape","id":"sh/qpg3ex0n","slide":5,"bbox":[626,254,-18.3,166]}
+{"kind":"shape","id":"sh/fa9w3m94","slide":5,"bbox":[698,254,7.94,166]}
+{"kind":"shape","id":"sh/8z25kb6x","slide":5,"bbox":[770,254,26.88,166]}
+{"kind":"shape","id":"sh/1gvy90je","slide":5,"bbox":[842,254,21.11,166]}
+{"kind":"shape","id":"sh/tsvu9kni","slide":5,"bbox":[914,254,-4.07,166]}
+{"kind":"shape","id":"sh/47y1kre1","slide":5,"bbox":[382,340,220,24]}
+{"kind":"textbox","id":"sh/bm58z25k","slide":5,"text":"Ghost Queue","textPreview":"Ghost Queue","textChars":11,"textLines":1,"bbox":[420,308,120,20]}
+{"kind":"shape","id":"sh/m1cfa9w3","slide":5,"bbox":[340,388,20,28]}
+{"kind":"shape","id":"sh/tgfmlkjm","slide":5,"bbox":[388,376,20,28]}
+{"kind":"shape","id":"sh/4vmtwra5","slide":5,"bbox":[436,364,20,28]}
+{"kind":"shape","id":"sh/bat47y1k","slide":5,"bbox":[484,352,20,28]}
+{"kind":"shape","id":"sh/mp0bi9s3","slide":5,"bbox":[532,340,20,28]}
+{"kind":"shape","id":"sh/t83itgfm","slide":5,"bbox":[278,478,202,82]}
+{"kind":"textbox","id":"sh/4nap4r65","slide":5,"text":"Volatility Warning","textPreview":"Volatility Warning","textChars":18,"textLines":1,"bbox":[300,500,160,24]}
+{"kind":"textbox","id":"sh/eloj2t83","slide":5,"text":"Confidence degraded when historical variance is high.","textPreview":"Confidence degraded when historical variance is high.","textChars":53,"textLines":1,"bbox":[300,528,158,18]}
+{"kind":"shape","id":"sh/36hcrmhk","slide":5,"bbox":[506,478,202,82]}
+{"kind":"textbox","id":"sh/wra5gbq1","slide":5,"text":"Signal Gating","textPreview":"Signal Gating","textChars":13,"textLines":1,"bbox":[528,500,150,24]}
+{"kind":"textbox","id":"sh/lc7u54zi","slide":5,"text":"Meter release to residual capacity; preserve green wave.","textPreview":"Meter release to residual capacity; preserve green wave.","textChars":56,"textLines":1,"bbox":[528,528,158,24]}
+{"kind":"shape","id":"sh/ed8bat47","slide":5,"bbox":[790,214,360,130]}
+{"kind":"textbox","id":"sh/7u54zido","slide":5,"text":"Upstream Signal Gating","textPreview":"Upstream Signal Gating","textChars":22,"textLines":1,"bbox":[818,238,270,30]}
+{"kind":"textbox","id":"sh/wfyxobm5","slide":5,"text":"Offset recalibration meters inflow to the residual capacity of the blocked link; operator approval remains mandatory.","textPreview":"Offset recalibration meters inflow to the residual capacity of the blocked link; operator approval remains mandatory.","textChars":117,"textLines":1,"bbox":[818,278,284,40]}
+{"kind":"shape","id":"sh/l0rqd4vm","slide":5,"bbox":[790,374,360,130]}
+{"kind":"textbox","id":"sh/e1w7mp0b","slide":5,"text":"Preemption Protocol","textPreview":"Preemption Protocol","textChars":19,"textLines":1,"bbox":[818,398,270,30]}
+{"kind":"textbox","id":"sh/7mp0bi9s","slide":5,"text":"Additive priority score orders simultaneous crashes by severity, inflow, and lane-loss ratio before routing QRTs.","textPreview":"Additive priority score orders simultaneous crashes by severity, inflow, and lane-loss ratio before routing QRTs.","textChars":113,"textLines":1,"bbox":[818,438,284,40]}
+{"kind":"shape","id":"sh/zed8v6ps","slide":5,"bbox":[790,534,360,74]}
+{"kind":"textbox","id":"sh/6xkf6dcb","slide":5,"text":"Operator sees: barricades, officers, closure pattern, upstream node, and approval gate.","textPreview":"Operator sees: barricades, officers, closure pattern, upstream node, and approval gate.","textChars":87,"textLines":1,"bbox":[818,558,290,28]}
+{"kind":"notes","id":"nt/z9lf2e","slide":5,"text":""}
+{"kind":"slide","id":"sl/23vjdk","slide":6,"title":"FEASIBILITY, IMPACT & SCALE","textShapes":19}
+{"kind":"textbox","id":"sh/kb6xkf6d","slide":6,"text":"FEASIBILITY, IMPACT & SCALE","textPreview":"FEASIBILITY, IMPACT & SCALE","textChars":27,"textLines":1,"bbox":[58,34,360,24]}
+{"kind":"textbox","id":"sh/rqd4vmtw","slide":6,"text":"06","textPreview":"06","textChars":2,"textLines":1,"bbox":[1182,34,42,22]}
+{"kind":"shape","id":"sh/25kb6xkf","slide":6,"bbox":[58,688,160,0]}
+{"kind":"textbox","id":"sh/9knih4by","slide":6,"text":"PROJECT PRAVAH / Deterministic urban response simulation","textPreview":"PROJECT PRAVAH / Deterministic urban response simulation","textChars":56,"textLines":1,"bbox":[230,678,560,24]}
+{"kind":"textbox","id":"sh/kzupwb2h","slide":6,"text":"Day-one feasible. City-wide scalable.","textPreview":"Day-one feasible. City-wide scalable.","textChars":37,"textLines":1,"bbox":[58,82,800,58]}
+{"kind":"textbox","id":"sh/re1w7mp0","slide":6,"text":"MVP runs on existing ASTraM history and deterministic simulation. Live sensors, PostGIS, ATCS automation, and ride-hailing geofences are extensions.","textPreview":"MVP runs on existing ASTraM history and deterministic simulation. Live sensors, PostGIS, ATCS automation, and ride-hailing geofences are ...","textChars":148,"textLines":1,"bbox":[62,142,900,34]}
+{"kind":"shape","id":"sh/2t83itgf","slide":6,"bbox":[62,206,230,84]}
+{"kind":"textbox","id":"sh/9gr2p8nq","slide":6,"text":"ASTraM records validated","textPreview":"ASTraM records validated","textChars":24,"textLines":1,"bbox":[80,222,194,20]}
+{"kind":"textbox","id":"sh/gvy90je9","slide":6,"text":"8,173","textPreview":"8,173","textChars":5,"textLines":1,"bbox":[80,246,194,32]}
+{"kind":"shape","id":"sh/yd0z6103","slide":6,"bbox":[318,206,180,84]}
+{"kind":"textbox","id":"sh/rytsvu9k","slide":6,"text":"Rejected rows","textPreview":"Rejected rows","textChars":13,"textLines":1,"bbox":[336,222,144,20]}
+{"kind":"textbox","id":"sh/gfmlkjm1","slide":6,"text":"0","textPreview":"0","textChars":1,"textLines":1,"bbox":[336,246,144,32]}
+{"kind":"shape","id":"sh/90je9cvi","slide":6,"bbox":[524,206,190,84]}
+{"kind":"textbox","id":"sh/y1kre1w7","slide":6,"text":"Simulation model","textPreview":"Simulation model","textChars":16,"textLines":1,"bbox":[542,222,154,20]}
+{"kind":"textbox","id":"sh/rmhk3q5o","slide":6,"text":"2.0.0","textPreview":"2.0.0","textChars":5,"textLines":1,"bbox":[542,246,154,32]}
+{"kind":"shape","id":"sh/g7adsji5","slide":6,"bbox":[62,326,490,246]}
+{"kind":"textbox","id":"sh/9s36hcrm","slide":6,"text":"PRAVAH vs. baseline SOP","textPreview":"PRAVAH vs. baseline SOP","textChars":23,"textLines":1,"bbox":[92,352,300,24]}
+{"kind":"shape","id":"sh/nih4byhg","slide":6,"bbox":[620,326,510,64]}
+{"kind":"textbox","id":"sh/3m94fu18","slide":6,"text":"Feasibility","textPreview":"Feasibility","textChars":11,"textLines":1,"bbox":[648,340,150,22]}
+{"kind":"textbox","id":"sh/a5gbq1or","slide":6,"text":"Existing cleaned ASTraM CSV, reproducible seed, operator-reviewed API payloads.","textPreview":"Existing cleaned ASTraM CSV, reproducible seed, operator-reviewed API payloads.","textChars":79,"textLines":1,"bbox":[810,340,286,28]}
+{"kind":"shape","id":"sh/lszqtcj6","slide":6,"bbox":[620,410,510,64]}
+{"kind":"textbox","id":"sh/s72x4nap","slide":6,"text":"Impact","textPreview":"Impact","textChars":6,"textLines":1,"bbox":[648,424,150,22]}
+{"kind":"textbox","id":"sh/3ylc7u54","slide":6,"text":"Faster containment, less transverse spillback, objective Delta-T feedback.","textPreview":"Faster containment, less transverse spillback, objective Delta-T feedback.","textChars":74,"textLines":1,"bbox":[810,424,286,28]}
+{"kind":"shape","id":"sh/adsji5sn","slide":6,"bbox":[620,494,510,64]}
+{"kind":"textbox","id":"sh/h4byhgn2","slide":6,"text":"Future Scale","textPreview":"Future Scale","textChars":12,"textLines":1,"bbox":[648,508,150,22]}
+{"kind":"textbox","id":"sh/sji5snel","slide":6,"text":"PostGIS city graph + ride-hailing geofence synchronization for stadium-scale events.","textPreview":"PostGIS city graph + ride-hailing geofence synchronization for stadium-scale events.","textChars":84,"textLines":1,"bbox":[810,508,286,28]}
+{"kind":"shape","id":"sh/za1gvy90","slide":6,"bbox":[800,204,330,86]}
+{"kind":"textbox","id":"sh/ap4r65wj","slide":6,"text":"Day 1 deployment avoids expensive live sensors.","textPreview":"Day 1 deployment avoids expensive live sensors.","textChars":47,"textLines":1,"bbox":[828,230,270,28]}
+{"kind":"chart","id":"ch/2p8nqxs7","slide":6,"name":"","chartType":"bar","bbox":[92,392,410,140]}
+{"kind":"notes","id":"nt/23vjdk","slide":6,"text":""}

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PRAVAH EventPoint",
+  "type": "object",
+  "required": [
+    "id",
+    "latitude",
+    "longitude",
+    "event_cause",
+    "event_type",
+    "status"
+  ],
+  "properties": {
+    "id": { "type": "string" },
+    "latitude": { "type": "number", "minimum": -90, "maximum": 90 },
+    "longitude": { "type": "number", "minimum": -180, "maximum": 180 },
+    "event_cause": { "type": "string" },
+    "event_type": { "type": "string" },
+    "status": { "type": "string" },
+    "zone": { "type": ["string", "null"] },
+    "corridor": { "type": ["string", "null"] },
+    "junction": { "type": ["string", "null"] },
+    "address": { "type": ["string", "null"] },
+    "start_datetime": { "type": ["string", "null"] },
+    "end_datetime": { "type": ["string", "null"] },
+    "is_severe": { "type": ["boolean", "number", "null"] }
+  },
+  "additionalProperties": true
+}

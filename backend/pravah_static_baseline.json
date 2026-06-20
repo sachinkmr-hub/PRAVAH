@@ -1,0 +1,86 @@
+{
+  "project": "PRAVAH",
+  "generated_from": "C:\\Users\\sachin\\Downloads\\gridlock 2.0\\cleaned_astram_events.csv",
+  "historical_rows": 5623,
+  "live_rows_excluded": 2550,
+  "metrics": {
+    "r2": 0.9944,
+    "mae": 0.0023,
+    "test_rows": 1125
+  },
+  "chronic_hotspots": {
+    "monsoon_zones": [
+      {
+        "zone": "UNKNOWN",
+        "node": "YelhankaCircle",
+        "corridor": "Bellary Road 2",
+        "event_count": 5,
+        "severe_count": 0,
+        "avg_duration_minutes": 28196.8,
+        "latitude": 13.093405,
+        "longitude": 77.59619
+      },
+      {
+        "zone": "UNKNOWN",
+        "node": "Bellary Road",
+        "corridor": "Bellary Road 1",
+        "event_count": 4,
+        "severe_count": 0,
+        "avg_duration_minutes": 3833.0,
+        "latitude": 13.023943,
+        "longitude": 77.584943
+      },
+      {
+        "zone": "UNKNOWN",
+        "node": "Dr Rajkumar Puniya Bhoomi Road",
+        "corridor": "ORR West 1",
+        "event_count": 4,
+        "severe_count": 0,
+        "avg_duration_minutes": 2438.8,
+        "latitude": 12.909404,
+        "longitude": 77.576609
+      }
+    ],
+    "accident_zones": [
+      {
+        "zone": "South Zone 1",
+        "node": "2nd Cross Road",
+        "corridor": "Non-corridor",
+        "event_count": 50,
+        "severe_count": 0,
+        "avg_duration_minutes": 256.3,
+        "latitude": 12.918617,
+        "longitude": 77.58946
+      },
+      {
+        "zone": "UNKNOWN",
+        "node": "Sarjapura Main Road",
+        "corridor": "Non-corridor",
+        "event_count": 14,
+        "severe_count": 7,
+        "avg_duration_minutes": 67.5,
+        "latitude": 12.882574,
+        "longitude": 77.754633
+      },
+      {
+        "zone": "UNKNOWN",
+        "node": "Bellary Road",
+        "corridor": "Bellary Road 2",
+        "event_count": 8,
+        "severe_count": 5,
+        "avg_duration_minutes": 79.2,
+        "latitude": 13.09426,
+        "longitude": 77.598503
+      }
+    ]
+  },
+  "category_counts": {
+    "BREAKDOWN": 3587,
+    "CIVIC_WORK": 872,
+    "OTHER": 563,
+    "ACCIDENT": 300,
+    "MONSOON": 158,
+    "PUBLIC_ORDER": 139,
+    "VIP": 4
+  }
+}

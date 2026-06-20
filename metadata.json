@@ -1,0 +1,6 @@
+{
+  "name": "Pravah Traffic Optimization",
+  "description": "Deterministic urban routing, kinematic fluid shockwave calculation, and command dispatcher.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
