@@ -476,6 +476,25 @@ app.post("/api/strategy", async (req, res) => {
   }
 
   try {
+    if (!process.env.GROQ_API_KEY) {
+      const mockProtocol = `## 1. Infrastructural & Tactical Assessment
+- **Corridor Bottleneck:** The primary friction point at ${event?.address || "the incident location"} is restricting throughput to ${velocity} km/h.
+- **Resource Constraints:** With only ${officersAvailable} officers available, manual overrides across all adjacent intersections are not feasible.
+- **Queue Growth:** At ${density} veh/km, the queue is propagating backward at a critical rate.
+
+## 2. Recommended Signal & Routing Actions
+- **Upstream Signal Override:** Extend the green phase at the two preceding major intersections by 15 seconds to flush accumulated volume.
+- **Local Preemption:** Switch the immediate intersection to a manual "All-Red" flash to prioritize emergency and clearance vehicles.
+- **Dynamic Rerouting:** Instruct the routing engine to divert upcoming traffic through secondary arterial roads.
+
+## 3. Human-In-The-Loop Execution Steps
+1. Dispatch 2 Rapid Response units specifically for intersection perimeter control.
+2. Coordinate with local towing/clearance operators via the emergency dispatch channel.
+3. Once clearance is achieved, initiate the automated Signal Recovery Protocol to re-synchronize the grid.`;
+      
+      return res.json({ success: true, protocol: mockProtocol, mode: "SIMULATION_ADVISORY", requires_human_approval: true, timestamp: new Date().toISOString() });
+    }
+
     const chatCompletion = await getAiClient().chat.completions.create({
       model: process.env.GROQ_MODEL ?? "llama-3.1-8b-instant",
       messages: [

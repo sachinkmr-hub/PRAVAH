@@ -331,6 +331,7 @@ const getEventIcon = (eventName: string, type: string) => {
   const color = type === "PROACTIVE" ? "#3B82F6" : "#EF4444";
 
   return L.divIcon({
+    className: 'animate-fade-in',
     html: `<div style="
       font-size: 20px; 
       text-shadow: 0 2px 4px rgba(0,0,0,0.4); 
@@ -1263,35 +1264,52 @@ export default function Dashboard() {
               const markerColor = URGENCY_COLORS[cluster.peak_urgency] || CATEGORY_COLORS[activeDashboard];
               
               return (
-                <Circle
-                  key={`cluster-${cluster.clusterId}`}
-                  center={[cluster.latitude, cluster.longitude]}
-                  radius={isSelectedCluster ? 250 : 150}
-                  pathOptions={{
-                    color: isSelectedCluster ? "#fff" : markerColor,
-                    fillColor: markerColor,
-                    fillOpacity: isSelectedCluster ? 0.2 : 0.05,
-                    weight: isSelectedCluster ? 4 : 2,
-                  }}
-                  eventHandlers={{
-                    click: () => {
-                      const ev = cluster.events[0];
-                      if (!ev) return;
-                      setZoomTarget([cluster.latitude, cluster.longitude]);
-                      setIntelligenceLoading(true);
-                      fetch(`/api/v1/event/${ev.eventId}/intelligence`)
-                        .then(res => res.json())
-                        .then(data => {
-                          if (data.status === 'success') setSelectedIntelligence(data); selectedEventIdRef.current = data.eventId;
-                          setIntelligenceLoading(false);
-                        })
-                        .catch(err => {
-                          console.error("Failed to load int:", err);
-                          setIntelligenceLoading(false);
-                        });
-                    }
-                  }}
-                />
+                <React.Fragment key={`cluster-group-${cluster.clusterId}`}>
+                  <Circle
+                    key={`cluster-${cluster.clusterId}`}
+                    center={[cluster.latitude, cluster.longitude]}
+                    radius={isSelectedCluster ? 250 : 150}
+                    pathOptions={{
+                      color: isSelectedCluster ? "#fff" : markerColor,
+                      fillColor: markerColor,
+                      fillOpacity: isSelectedCluster ? 0.2 : 0.05,
+                      weight: isSelectedCluster ? 4 : 2,
+                    }}
+                    eventHandlers={{
+                      click: () => {
+                        setZoomTarget([cluster.latitude, cluster.longitude]);
+                        setExpandedClusterId(cluster.clusterId);
+                      }
+                    }}
+                  />
+                  {expandedClusterId === cluster.clusterId && cluster.events.map((ev, idx) => {
+                    const offsetLat = cluster.latitude + (idx > 0 ? (Math.cos(idx) * 0.0005) : 0);
+                    const offsetLng = cluster.longitude + (idx > 0 ? (Math.sin(idx) * 0.0005) : 0);
+                    return (
+                      <Marker
+                        key={`expanded-${ev.eventId}`}
+                        position={[offsetLat, offsetLng]}
+                        icon={getEventIcon(ev.event_name, ev.urgency === 'HIGH' ? 'REACTIVE' : 'PROACTIVE')}
+                        eventHandlers={{
+                          click: () => {
+                            setZoomTarget([offsetLat, offsetLng]);
+                            setIntelligenceLoading(true);
+                            fetch(`/api/v1/event/${ev.eventId}/intelligence`)
+                              .then(res => res.json())
+                              .then(data => {
+                                if (data.status === 'success') setSelectedIntelligence(data); selectedEventIdRef.current = data.eventId;
+                                setIntelligenceLoading(false);
+                              })
+                              .catch(err => {
+                                console.error("Failed to load int:", err);
+                                setIntelligenceLoading(false);
+                              });
+                          }
+                        }}
+                      />
+                    );
+                  })}
+                </React.Fragment>
               );
             })}
 
