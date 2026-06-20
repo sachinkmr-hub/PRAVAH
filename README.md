@@ -1,8 +1,9 @@
 <div align="center">
   <img src="public/logo.png" alt="PRAVAH Logo" width="120" height="120" />
   <h1>P R A V A H</h1>
-  <p><strong>Predictive Routing & Vehicular Analytics Hub</strong></p>
+  <p><strong>Proactive Response And Vehicular Analytics Hub</strong></p>
   <p><em>An Elite AI Traffic Operations Copilot built for the Bengaluru Traffic Police Command Center.</em></p>
+  <p><strong>Built by [Team Name] — NSUT Delhi</strong></p>
 </div>
 
 <br />

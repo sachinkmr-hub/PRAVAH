@@ -158,7 +158,7 @@ export default function App() {
                   }`}>P R Λ V Λ H</p>
                   <p className={`text-[10px] tracking-[0.15em] font-mono uppercase mt-0.5 opacity-80 ${
                     isDark ? "text-slate-400" : "text-neutral-600"
-                  }`}>Predictive Routing And Vehicular Action Heuristics</p>
+                  }`}>Proactive Response And Vehicular Analytics Hub</p>
                   <p className={`text-[12px] font-sans font-medium mt-1.5 ${
                     isDark ? "text-rose-400" : "text-rose-600"
                   }`}>PRAVAH hai – hume aapki PARVAH hai ❤️</p>

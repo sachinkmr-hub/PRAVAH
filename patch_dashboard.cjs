@@ -112,8 +112,8 @@ if (!content.includes("PRAVAH Cognitive Synthesis")) {
 }
 
 // 7. Update descriptive text
-// "Intelligent Autonomous Grid" -> "PRAVAH: Predictive & Responsive Autonomous Vehicular Analytics Hub"
-content = content.replace(/>Intelligent Autonomous Grid</g, '>PRAVAH: Predictive Autonomous Hub<');
+// "Intelligent Autonomous Grid" -> "PRAVAH: Proactive Response And Vehicular Analytics Hub"
+content = content.replace(/>Intelligent Autonomous Grid</g, '>PRAVAH: Proactive Response And Vehicular Analytics Hub<');
 content = content.replace(/>AI-driven real-time traffic arbitration for Bengaluru</g, '>Cognitive Synthesis & Multi-Dimensional Kinematic Simulation<');
 // "Deep City Graph" -> "Sub-Second Groq LPU Inference"
 content = content.replace(/>Deep City Graph</g, '>Sub-Second Groq LPU Inference<');
