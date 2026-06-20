@@ -423,35 +423,18 @@ function getAiClient() {
 const PRAVAH_SYSTEM_PROMPT = `You are PRAVAH, an elite AI traffic operations copilot built for the Bengaluru Traffic Police Command Center.
 You analyze multi-dimensional traffic intelligence and provide actionable tactical advisories.
 
-You MUST structure EVERY response into exactly these 3 Markdown sections:
+You MUST structure EVERY response into exactly 3 concise bullet points:
 
-## 1. Infrastructural & Tactical Assessment
-Analyze the immediate physical friction at the incident location:
-- Road surface quality inference (potholes, waterlogging, construction zones degrade max throughput)
-- Weather impact on driver behavior (rain causes erratic speeds, poor visibility → shockwaves)
-- Temperature as a canopy proxy: lower ambient temp often correlates with dense tree cover → narrower navigable lanes → higher friction
-- Lane count vs. demand ratio and residual capacity
-- Exact officer and barricade deployment recommendations with taper lengths
-
-## 2. Neighboural Spillover Analysis
-Predict how this incident will ripple into surrounding areas:
-- Adjacent geohash zones that will experience secondary congestion due to brake propagation
-- If surrounding areas have fewer lanes, heavy vehicle registrations, or degraded road conditions, bottleneck spillover is inevitable
-- Identify upstream diversion points BEFORE the shockwave reaches them
-- Landmark and POI density analysis: consecutive malls, tech parks, or tourist attractions in adjacent corridors create overlapping entry/exit zones that amplify gridlock
-
-## 3. Behavioural & Temporal View
-Factor in human psychology and time-based patterns:
-- Current time of day: Is this during the 9AM-11AM or 7PM-10PM Bengaluru commute peak?
-- Day of week: Weekends and festive seasons trigger mass exodus of working-class population toward hometowns, choking outbound arterials
-- Driver frustration prediction: high-density + low-velocity corridors increase wrong-way driving, signal jumping, and non-compliance
-- Recommend proactive vs. reactive posture based on temporal context
+- 🛑 **Friction**: 1-sentence analysis of the immediate bottleneck.
+- 🌊 **Spillover**: 1-sentence prediction of secondary congestion.
+- ⚡ **Action**: 1-sentence tactical recommendation (signal override, rerouting, or officer deployment).
 
 RULES:
+- Be EXTREMELY crisp and concise. The entire output must be under 3 sentences.
+- Use bullet points. Do NOT write paragraphs.
+- Do NOT use headers. Just output the 3 bullet points directly.
 - Always reference the EXACT density and velocity values provided. Never invent numbers.
-- All output is ADVISORY and SIMULATION-ONLY. Always state that human authorization is required.
-- Never claim to issue a signal, navigation, or police command.
-- Be concise but deeply technical. This is for trained traffic commanders, not civilians.`;
+- All output is ADVISORY. Always state that human authorization is required.`;
 
 app.post("/api/strategy", async (req, res) => {
   // Auth bypass for hackathon demo — re-enable for production
@@ -477,20 +460,9 @@ app.post("/api/strategy", async (req, res) => {
 
   try {
     if (!process.env.GROQ_API_KEY) {
-      const mockProtocol = `## 1. Infrastructural & Tactical Assessment
-- **Corridor Bottleneck:** The primary friction point at ${event?.address || "the incident location"} is restricting throughput to ${velocity} km/h.
-- **Resource Constraints:** With only ${officersAvailable} officers available, manual overrides across all adjacent intersections are not feasible.
-- **Queue Growth:** At ${density} veh/km, the queue is propagating backward at a critical rate.
-
-## 2. Recommended Signal & Routing Actions
-- **Upstream Signal Override:** Extend the green phase at the two preceding major intersections by 15 seconds to flush accumulated volume.
-- **Local Preemption:** Switch the immediate intersection to a manual "All-Red" flash to prioritize emergency and clearance vehicles.
-- **Dynamic Rerouting:** Instruct the routing engine to divert upcoming traffic through secondary arterial roads.
-
-## 3. Human-In-The-Loop Execution Steps
-1. Dispatch 2 Rapid Response units specifically for intersection perimeter control.
-2. Coordinate with local towing/clearance operators via the emergency dispatch channel.
-3. Once clearance is achieved, initiate the automated Signal Recovery Protocol to re-synchronize the grid.`;
+      const mockProtocol = `- 🛑 **Friction**: Primary bottleneck at ${event?.address || "the incident location"} is heavily restricting throughput to ${velocity} km/h with a queue growth of ${density} veh/km.
+- 🌊 **Spillover**: Queue is propagating backward at a critical rate, risking secondary gridlock at adjacent upstream intersections.
+- ⚡ **Action**: Deploy ${officersAvailable} officers for immediate perimeter control and initiate upstream "All-Red" flash to prioritize emergency vehicles (Human Authorization Required).`;
       
       return res.json({ success: true, protocol: mockProtocol, mode: "SIMULATION_ADVISORY", requires_human_approval: true, timestamp: new Date().toISOString() });
     }
