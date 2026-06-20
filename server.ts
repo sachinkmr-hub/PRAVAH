@@ -108,67 +108,86 @@ function isInScope(event: CanonicalEvent, scope: ReturnType<typeof queryScope>):
   return haversineKm(event.latitude, event.longitude, scope.lat, scope.lng) <= scope.radiusKm;
 }
 
-async function loadDataset(): Promise<void> {
-  const possiblePaths = [
-    path.join(process.cwd(), "cleaned_astram_events.csv"),
-    path.join(process.cwd(), "api", "cleaned_astram_events.csv"),
-    path.join(process.cwd(), "..", "cleaned_astram_events.csv"),
-    "cleaned_astram_events.csv"
-  ];
-  let csvPath = "";
-  for (const p of possiblePaths) {
-    if (fs.existsSync(p)) {
-      csvPath = p;
-      break;
-    }
-  }
-  if (!csvPath) throw new Error(`Dataset not found in any of the expected locations.`);
-  
-  await new Promise<void>((resolve, reject) => {
-    const readStream = fs.createReadStream(csvPath);
-    const csvStream = csv();
-    
-    readStream.on("error", reject);
-    csvStream.on("error", reject);
+let loadingPromise: Promise<void> | null = null;
 
-    readStream
-      .pipe(csvStream)
-      .on("data", (row: Record<string, unknown>) => {
-        const normalized = normalizeEvent(row);
-        if (!normalized.event) {
-          if (rejectedRows.length < 100) rejectedRows.push(normalized.error ?? "unknown validation error");
-          return;
-        }
-        if (events.has(normalized.event.id)) {
-          if (rejectedRows.length < 100) rejectedRows.push(`${normalized.event.id}: duplicate id`);
-          return;
-        }
-        const event = normalized.event;
-        if (event.startMs > new Date("2024-03-31T23:59:59Z").getTime()) {
-          return;
-        }
-        events.set(event.id, event);
-        if (event.startMs < CONFIG.nowMs) historical.push(event);
-        else if (event.paradigm === "PROACTIVE") planned.push(event);
-        else simulationPool.push(event);
-      })
-      .on("end", resolve)
-      .on("error", reject);
-  });
-  historical.sort((a, b) => a.startMs - b.startMs);
-  planned.sort((a, b) => a.startMs - b.startMs);
-  simulationPool.sort((a, b) => a.startMs - b.startMs || a.id.localeCompare(b.id));
-  ready = true;
-  console.log(JSON.stringify({
-    level: "info",
-    message: "dataset_ready",
-    total: events.size,
+async function loadDataset(): Promise<void> {
+  if (ready) return;
+  if (loadingPromise) return loadingPromise;
+
+  loadingPromise = (async () => {
+    const possiblePaths = [
+      path.join(process.cwd(), "cleaned_astram_events.csv"),
+      path.join(process.cwd(), "api", "cleaned_astram_events.csv"),
+      path.join(process.cwd(), "..", "cleaned_astram_events.csv"),
+      "cleaned_astram_events.csv"
+    ];
+    let csvPath = "";
+    for (const p of possiblePaths) {
+      if (fs.existsSync(p)) {
+        csvPath = p;
+        break;
+      }
+    }
+    if (!csvPath) throw new Error(`Dataset not found in any of the expected locations.`);
+    
+    await new Promise<void>((resolve, reject) => {
+      const readStream = fs.createReadStream(csvPath);
+      const csvStream = csv();
+      
+      readStream.on("error", reject);
+      csvStream.on("error", reject);
+
+      readStream
+        .pipe(csvStream)
+        .on("data", (row: Record<string, unknown>) => {
+          const normalized = normalizeEvent(row);
+          if (!normalized.event) {
+            if (rejectedRows.length < 100) rejectedRows.push(normalized.error ?? "unknown validation error");
+            return;
+          }
+          if (events.has(normalized.event.id)) {
+            if (rejectedRows.length < 100) rejectedRows.push(`${normalized.event.id}: duplicate id`);
+            return;
+          }
+          const event = normalized.event;
+          if (event.startMs > new Date("2024-03-31T23:59:59Z").getTime()) {
+            return;
+          }
+          events.set(event.id, event);
+          if (event.startMs < CONFIG.nowMs) {
+            historical.push(event);
+          } else if (event.paradigm === "PROACTIVE") {
+            planned.push(event);
+            simulationPool.push(event); // Broadcast planned events via SSE so UI markers render without touching frontend!
+          } else {
+            simulationPool.push(event);
+          }
+        })
+        .on("end", resolve)
+        .on("error", reject);
+    });
+    historical.sort((a, b) => a.startMs - b.startMs);
+    planned.sort((a, b) => a.startMs - b.startMs);
+    simulationPool.sort((a, b) => a.startMs - b.startMs || a.id.localeCompare(b.id));
+    ready = true;
+    console.log(JSON.stringify({
+      level: "info",
+      message: "dataset_ready",
+      total: events.size,
     historical: historical.length,
     planned: planned.length,
     simulationPool: simulationPool.length,
     rejected: rejectedRows.length,
     simulationNow: new Date(CONFIG.nowMs).toISOString(),
   }));
+  })();
+
+  try {
+    await loadingPromise;
+  } catch (error) {
+    loadingPromise = null;
+    throw error;
+  }
 }
 
 function clusterEvents(source: Iterable<CanonicalEvent>, category: string, scope: ReturnType<typeof queryScope>) {
