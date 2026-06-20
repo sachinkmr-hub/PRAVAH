@@ -3,7 +3,7 @@
   <h1>P R A V A H</h1>
   <p><strong>Proactive Response And Vehicular Analytics Hub</strong></p>
   <p><em>An Elite AI Traffic Operations Copilot built for the Bengaluru Traffic Police Command Center.</em></p>
-  <p><strong>Built by [Team Name] — NSUT Delhi</strong></p>
+  <p><strong>Built by Team VISION — NSUT Delhi</strong></p>
 </div>
 
 <br />
