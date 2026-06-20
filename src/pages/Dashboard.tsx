@@ -1158,40 +1158,6 @@ export default function Dashboard() {
         <main className="db-map-area">
           {/* Filter toggles */}
           <div className="db-filters">
-            <button 
-              className="db-filter-btn db-filter-active animate-pulse" 
-              
-              onClick={async () => {
-                if (!selectedIntelligence?.eventId) return;
-                try {
-                  const res = await fetch("/api/strategy", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                       eventId: selectedIntelligence?.eventId,
-                       density: selectedIntelligence?.kinematic_state?.baseline_demand_vph ? Math.round(selectedIntelligence.kinematic_state.baseline_demand_vph / 20) : 85,
-                       velocity: selectedIntelligence?.kinematic_state?.shockwave_speed_kmh ?? 15,
-                       officersAvailable: selectedIntelligence?.tactical_deployment?.officers_required ?? 45
-                    })
-                  });
-                  const data = await res.json();
-                  if (data.success) {
-                    setAiStrategyResult(data.protocol);
-                  } else {
-                    setAiStrategyResult("Error: " + data.error);
-                  }
-                } catch(e) {
-                  setAiStrategyResult("AI Strategy Generation failed.");
-                }
-              }}
-              disabled={!selectedIntelligence?.eventId}
-              style={{ display: 'flex', alignItems: 'center', gap: '6px', background: !selectedIntelligence?.eventId ? 'var(--bg-card)' : 'var(--accent)', color: !selectedIntelligence?.eventId ? '#666' : 'white', borderColor: 'transparent', boxShadow: !selectedIntelligence?.eventId ? 'none' : '0 0 12px rgba(14, 165, 233, 0.4)', opacity: !selectedIntelligence?.eventId ? 0.5 : 1, cursor: !selectedIntelligence?.eventId ? 'not-allowed' : 'pointer' }}
-            >
-              <Zap size={14} strokeWidth={2.5} />
-              <span style={{ fontWeight: 600, letterSpacing: '0.5px' }}>
-                {selectedIntelligence?.eventId ? 'GENERATE AI STRATEGY' : 'SELECT INCIDENT FOR AI STRATEGY'}
-              </span>
-            </button>
           </div>
 
           {loading && (
@@ -1633,6 +1599,36 @@ export default function Dashboard() {
                       <div className="mt-2 text-[9px] font-mono text-neutral-500">Simulation mode · Human approval required · {selectedIntelligence.decision_metadata?.model_version}</div>
                     </div>
                   )}
+
+                  <button
+                    className="mt-4 w-full py-2.5 rounded-lg font-bold text-xs flex items-center justify-center space-x-2 transition-all shadow-md animate-fade-in"
+                    style={{ backgroundColor: '#4f46e5', color: '#ffffff' }}
+                    onClick={async () => {
+                      try {
+                        const res = await fetch("/api/strategy", {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({
+                             eventId: selectedIntelligence.eventId,
+                             density: selectedIntelligence.kinematic_state?.baseline_demand_vph ? Math.round(selectedIntelligence.kinematic_state.baseline_demand_vph / 20) : 85,
+                             velocity: selectedIntelligence.kinematic_state?.shockwave_speed_kmh ?? 15,
+                             officersAvailable: selectedIntelligence.tactical_deployment?.officers_required ?? 45
+                          })
+                        });
+                        const data = await res.json();
+                        if (data.success) {
+                          setAiStrategyResult(data.protocol);
+                        } else {
+                          setAiStrategyResult("Error: " + data.error);
+                        }
+                      } catch(e) {
+                        setAiStrategyResult("AI Strategy Generation failed.");
+                      }
+                    }}
+                  >
+                    <Zap size={16} />
+                    <span>GENERATE TACTICAL AI STRATEGY</span>
+                  </button>
 
                   {aiStrategyResult && (
                     <div className="mt-3 bg-indigo-50 border border-indigo-200 p-3 rounded-lg animate-fade-in shadow-sm">
