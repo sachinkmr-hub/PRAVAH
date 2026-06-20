@@ -54,6 +54,10 @@ function formatEventName(cause: string): string {
 }
 
 function eventView(event: CanonicalEvent) {
+  let source = "ASTRAM_NOTIFICATION";
+  if (event.dashCategory === "weather_impacts") source = "WEATHER_API";
+  else if (event.paradigm === "PROACTIVE") source = "NEWS_AGENT_PING";
+
   return {
     eventId: event.id,
     event_name: formatEventName(event.cause),
@@ -66,6 +70,7 @@ function eventView(event: CanonicalEvent) {
     type: event.paradigm,
     street: event.address.split(",")[0] || event.address,
     corridor: event.corridor,
+    data_source: source,
   };
 }
 
