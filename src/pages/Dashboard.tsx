@@ -1028,8 +1028,15 @@ export default function Dashboard() {
         </aside>
 
         {/* ── Sub-Locations Panel (Appears for selected category OR active pings) ── */}
-        {(activeRailIdx !== 2) && (layerClusters.length > 0 || activeNotifications.length > 0) && (!selectedIntelligence || hoveredDashboard === activeDashboard) && (
-          <aside className="db-sub-sidebar animate-fade-right" style={{ background: `rgba(255, 255, 255, ${subSidebarOpacity})` }}>
+        {(activeRailIdx !== 2) && (layerClusters.length > 0 || activeNotifications.length > 0) && (
+          <aside 
+            className="db-sub-sidebar transition-all duration-500 ease-in-out" 
+            style={{ 
+              background: `rgba(255, 255, 255, ${subSidebarOpacity})`,
+              left: selectedIntelligence ? '338px' : 'auto',
+              right: selectedIntelligence ? 'auto' : '16px',
+            }}
+          >
             {/* Opacity slider removed */}
             
             {/* Live Astram Pings Section */}
