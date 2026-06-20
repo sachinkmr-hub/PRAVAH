@@ -138,16 +138,16 @@ function FlyToLocation({
 }
 
 /* ─── Zoom to a specific event location when user clicks it in the hover card ─── */
-function ZoomToTarget({ target, onDone }: { target: [number, number] | null; onDone: () => void }) {
+function ZoomToTarget({ target }: { target: [number, number] | null }) {
   const map = useMap();
-  const fired = useRef<[number, number] | null>(null);
+  const lat = target?.[0];
+  const lng = target?.[1];
+
   useEffect(() => {
-    if (target && target !== fired.current) {
-      fired.current = target;
-      map.flyTo(target, 16, { duration: 1.2, easeLinearity: 0.3 });
-      onDone();
+    if (lat !== undefined && lng !== undefined) {
+      map.flyTo([lat, lng], 16, { duration: 1.2, easeLinearity: 0.3 });
     }
-  }, [target, map, onDone]);
+  }, [lat, lng, map]);
   return null;
 }
 
@@ -729,12 +729,15 @@ export default function Dashboard() {
     setGridState(null);
     setLayerData({});
     setSelectedIntelligence(null); selectedEventIdRef.current = null;
+    setAiStrategyResult(null);
     setHoveredCluster(null);
     setZoomTarget(null);
+    setExpandedClusterId(null);
   }, [selectedLocation]);
 
   const [hitlTimeLeft, setHitlTimeLeft] = useState<number | null>(null);
   const [useMinOfficers, setUseMinOfficers] = useState(false);
+  const [expandedClusterId, setExpandedClusterId] = useState<string | null>(null);
 
   /* ── When an intelligence popup opens, simulate a HITL countdown ── */
   useEffect(() => {
@@ -1212,7 +1215,7 @@ export default function Dashboard() {
               lng={selectedLocation.lng}
               isOverview={isOverview}
             />
-            <ZoomToTarget target={zoomTarget} onDone={handleZoomDone} />
+            <ZoomToTarget target={zoomTarget} />
 
             {/* ── Chronic Hotspots (Historical Baseline) ── */}
             {activeDashboard === "chronic" && chronicSpots.map((spot, i) => {
@@ -1384,6 +1387,7 @@ export default function Dashboard() {
                     setSelectedIntelligence(null); selectedEventIdRef.current = null;
                     setShowFeedbackToast(false);
                     setFeedbackScore(3);
+                    setAiStrategyResult(null);
                   }} className="text-neutral-500 hover:text-neutral-900 transition-colors">
                     <X size={16} />
                   </button>
@@ -1602,6 +1606,18 @@ export default function Dashboard() {
                         </div>
                       </div>
                       <div className="mt-2 text-[9px] font-mono text-neutral-500">Simulation mode · Human approval required · {selectedIntelligence.decision_metadata?.model_version}</div>
+                    </div>
+                  )}
+
+                  {aiStrategyResult && (
+                    <div className="mt-3 bg-indigo-50 border border-indigo-200 p-3 rounded-lg animate-fade-in shadow-sm">
+                      <div className="flex items-center space-x-2 mb-2">
+                        <Zap size={14} className="text-indigo-600" />
+                        <span className="text-xs font-bold text-indigo-900 uppercase">AI Recommended Strategy</span>
+                      </div>
+                      <div className="text-[11px] text-indigo-800 whitespace-pre-wrap font-mono leading-relaxed">
+                        {aiStrategyResult}
+                      </div>
                     </div>
                   )}
 
