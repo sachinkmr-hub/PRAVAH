@@ -403,8 +403,15 @@ app.get("/api/v1/grid/chronic-hotspots", (req, res) => {
 app.get("/api/v1/grid/layer/:category", (req, res) => {
   try {
     const allowed = /* @__PURE__ */ new Set(["weather", "incidents", "civic_works", "events_vips", "signal_failures"]);
-    if (!allowed.has(req.params.category)) return res.status(400).json({ error: "Unknown layer category" });
-    res.json({ status: "success", layer: req.params.category, clusters: clusterEvents(planned, req.params.category, queryScope(req)) });
+    const category = req.params.category;
+    if (!allowed.has(category)) return res.status(400).json({ error: "Unknown layer category" });
+    
+    // Force unplanned events to be completely empty on load
+    if (["weather", "incidents", "signal_failures"].includes(category)) {
+      return res.json({ status: "success", layer: category, clusters: [] });
+    }
+    
+    res.json({ status: "success", layer: category, clusters: clusterEvents(events.values(), category, queryScope(req)) });
   } catch (error) {
     res.status(400).json({ error: error instanceof Error ? error.message : "Invalid query" });
   }

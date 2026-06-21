@@ -306,8 +306,15 @@ app.get("/api/v1/grid/chronic-hotspots", (req, res) => {
 app.get("/api/v1/grid/layer/:category", (req, res) => {
   try {
     const allowed = new Set(["weather", "incidents", "civic_works", "events_vips", "signal_failures"]);
-    if (!allowed.has(req.params.category)) return res.status(400).json({ error: "Unknown layer category" });
-    res.json({ status: "success", layer: req.params.category, clusters: clusterEvents(events.values(), req.params.category, queryScope(req)) });
+    const category = req.params.category;
+    if (!allowed.has(category)) return res.status(400).json({ error: "Unknown layer category" });
+    
+    // Force unplanned events to be completely empty on load
+    if (["weather", "incidents", "signal_failures"].includes(category)) {
+      return res.json({ status: "success", layer: category, clusters: [] });
+    }
+    
+    res.json({ status: "success", layer: category, clusters: clusterEvents(events.values(), category, queryScope(req)) });
   } catch (error) {
     res.status(400).json({ error: error instanceof Error ? error.message : "Invalid query" });
   }
@@ -318,7 +325,12 @@ app.get("/api/v1/grid/state", (req, res) => {
     const scope = queryScope(req);
     const hotspots = chronicHotspots(scope);
     const layers = Object.fromEntries(["weather", "incidents", "civic_works", "events_vips", "signal_failures"]
-      .map((category) => [category, clusterEvents(events.values(), category, scope)]));
+      .map((category) => {
+        if (["weather", "incidents", "signal_failures"].includes(category)) {
+          return [category, []];
+        }
+        return [category, clusterEvents(events.values(), category, scope)];
+      }));
     res.json({
       status: "success",
       simulation: { mode: "DETERMINISTIC_REPLAY", now: new Date(CONFIG.nowMs).toISOString(), seed: CONFIG.seed, model_version: "pravah-sim-2.0.0" },

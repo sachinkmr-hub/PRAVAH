@@ -376,7 +376,7 @@ function MiddlePanel({
   const panelRef = useRef<HTMLDivElement>(null);
   
   // Opacity Tuning State
-  const [panelOpacity, setPanelOpacity] = useState(0.05);
+  const [panelOpacity, setPanelOpacity] = useState(0.95);
   const [cardOpacity, setCardOpacity] = useState(0.4);
   const [pingOpacity, setPingOpacity] = useState(0.7);
 
@@ -668,8 +668,8 @@ export default function Dashboard() {
   const isAuthenticated = !!localStorage.getItem("pravah_auth");
 
   // Opacity Tuning State for Sidebars
-  const [sidebarOpacity, setSidebarOpacity] = useState(0.85);
-  const [subSidebarOpacity, setSubSidebarOpacity] = useState(0.85);
+  const [sidebarOpacity, setSidebarOpacity] = useState(0.95);
+  const [subSidebarOpacity, setSubSidebarOpacity] = useState(0.95);
 
   useEffect(() => {
     if (isDarkMode) document.body.classList.add("dark-mode");
@@ -793,14 +793,16 @@ export default function Dashboard() {
       setLayerData(prev => {
         const newData = { ...prev };
         categories.forEach((cat, idx) => {
-          const clusters = results[idx].clusters || [];
-          if (!newData[cat]) {
-            newData[cat] = clusters;
+          let clusters = results[idx].clusters || [];
+          // Force unplanned events to be zero at start, wait for Astram pings
+          if (cat === 'incidents' || cat === 'weather' || cat === 'signal_failures') {
+            clusters = [];
           }
-          if (cat === 'civic_works' || cat === 'events_vips') {
-            const sum = clusters.reduce((acc: number, c: any) => acc + (c.event_count || 1), 0);
-            setLiveCounts(prevCounts => ({ ...prevCounts, [cat]: sum }));
-          }
+          newData[cat] = clusters;
+          
+          // Accurately sum all underlying events in a cluster, not just the clusters themselves
+          const sum = clusters.reduce((acc: number, c: any) => acc + (c.events ? c.events.length : (c.event_count || 1)), 0);
+          setLiveCounts(prevCounts => ({ ...prevCounts, [cat]: sum }));
         });
         return newData;
       });
@@ -1028,6 +1030,7 @@ export default function Dashboard() {
         </aside>
 
         {/* ── Live Astram Pings Panel ── */}
+        {!((activeRailIdx === 2 || activeRailIdx !== 2) && layerClusters.length > 0 && (!selectedIntelligence || hoveredDashboard === activeDashboard)) && (
         <aside 
           className="db-sub-sidebar transition-all duration-500 ease-in-out" 
           style={{ 
@@ -1107,9 +1110,10 @@ export default function Dashboard() {
             )}
           </div>
         </aside>
+        )}
 
         {/* ── Sub-Locations Panel (Appears for selected category OR active pings) ── */}
-        {(activeRailIdx !== 2) && (layerClusters.length > 0) && (!selectedIntelligence || hoveredDashboard === activeDashboard) && (
+        {((activeRailIdx === 2 || activeRailIdx !== 2) && layerClusters.length > 0 && (!selectedIntelligence || hoveredDashboard === activeDashboard)) && (
           <aside className="db-sub-sidebar animate-fade-right" style={{ background: `rgba(255, 255, 255, ${subSidebarOpacity})`, left: '338px' }}>
 
             {layerClusters.length > 0 && (
@@ -1363,7 +1367,14 @@ export default function Dashboard() {
             ))}
 
             <MapZoomControls />
-            <MapClickHandler onMapClick={() => { /* Removed aggressive panel dismissal */ }} />
+            <MapClickHandler onMapClick={() => {
+              setActiveDashboard('chronic');
+              setActiveRailIdx(0);
+              setSelectedIntelligence(null);
+              selectedEventIdRef.current = null;
+              setShowFeedbackToast(false);
+              setExpandedClusterId(null);
+            }} />
           </MapContainer>
 
           <MiddlePanel 
