@@ -25,18 +25,24 @@ export default function App() {
   const isDark = theme === "dark";
 
   React.useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      const hero = document.getElementById("hero-section");
-      const command = document.getElementById("scrollytelling-section");
-      const about = document.getElementById("about-section");
-      
-      const scrollY = window.scrollY + window.innerHeight / 3;
-      if (about && scrollY >= about.offsetTop) {
-        setActiveSection("About");
-      } else if (command && scrollY >= command.offsetTop) {
-        setActiveSection("Command");
-      } else {
-        setActiveSection("Technology");
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const command = document.getElementById("scrollytelling-section");
+          const about = document.getElementById("about-section");
+          
+          const scrollY = window.scrollY + window.innerHeight / 3;
+          if (about && scrollY >= about.offsetTop) {
+            setActiveSection("About");
+          } else if (command && scrollY >= command.offsetTop) {
+            setActiveSection("Command");
+          } else {
+            setActiveSection("Technology");
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
     window.addEventListener("scroll", handleScroll, { passive: true });

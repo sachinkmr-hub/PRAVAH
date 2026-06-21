@@ -49,9 +49,9 @@
   100% { transform: translateX(120%); opacity: 0.35; }
 }
 
-.animate-flow-1 { animation: flow1 12s ease-in-out infinite; }
-.animate-flow-2 { animation: flow2 15s ease-in-out infinite; }
-.animate-flow-3 { animation: flow1 18s ease-in-out infinite reverse; }
+.animate-flow-1 { animation: flow1 12s linear infinite; }
+.animate-flow-2 { animation: flow2 15s linear infinite; }
+.animate-flow-3 { animation: flow1 18s linear infinite reverse; }
 
 .animate-fade-up-1 {
   opacity: 0;

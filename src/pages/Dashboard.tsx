@@ -706,23 +706,39 @@ export default function Dashboard() {
   const selectedEventIdRef = useRef<string | null>(null);
   const intelPanelRef = useRef<HTMLDivElement>(null);
 
-  // Outside click handler for intelligence panel
+  // Global outside click handler to dismiss all active panels/cards
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (intelPanelRef.current && !intelPanelRef.current.contains(event.target as Node)) {
-        // Also ignore clicks on map markers, map controls, etc. if needed, 
-        // but for now, simple outside click works for Sidebar/Header clicks.
-        // We only want to close it if it's explicitly outside the panel and not on a marker.
-        // The MapClickHandler already handles map clicks.
-        
-        // Actually, to avoid conflicting with map marker clicks which SET the intelligence,
-        // we should only clear if the target is NOT a leaflet element.
-        const target = event.target as Element;
-        if (target && !target.closest('.leaflet-container') && !target.closest('.db-leaflet-map')) {
-          setSelectedIntelligence(null);
-        }
+      const target = event.target as Element;
+      
+      // Do nothing if the click originated from inside ANY panel or navigation UI
+      if (
+        !target ||
+        target.closest('.db-sub-sidebar') || 
+        target.closest('.db-middle-panel') || 
+        target.closest('.db-rail-container') || 
+        target.closest('.db-location-picker') ||
+        (intelPanelRef.current && intelPanelRef.current.contains(target))
+      ) {
+        return;
       }
+      
+      // Do nothing if the click is on a map marker or interactive element (these have their own handlers)
+      if (
+        target.closest('.leaflet-marker-icon') || 
+        target.closest('.db-sub-event-btn') || 
+        target.closest('.leaflet-interactive') ||
+        target.closest('.leaflet-control')
+      ) {
+        return;
+      }
+
+      // If clicked anywhere else (empty map space, empty header space, etc.), close EVERYTHING
+      setSelectedIntelligence(null);
+      selectedEventIdRef.current = null;
+      setActiveRailIdx(0);
     }
+    
     document.addEventListener("mousedown", handleClickOutside);
     return () => { document.removeEventListener("mousedown", handleClickOutside); };
   }, []);
@@ -881,7 +897,7 @@ export default function Dashboard() {
 
           setTimeout(() => {
             setActiveNotifications(prev => prev.filter(n => n.displayId !== displayId || n.id === selectedEventIdRef.current));
-          }, 15000);
+          }, 3000);
         }
       } catch (error) {
         console.error('Invalid Astram stream payload:', error);
@@ -1049,88 +1065,16 @@ export default function Dashboard() {
           </div>
         </aside>
 
-        {/* ── Live Astram Pings Panel ── */}
-        {activeRailIdx !== 2 && !(layerClusters.length > 0 && (!selectedIntelligence || hoveredDashboard === activeDashboard)) && (
-        <aside 
-          className="db-sub-sidebar transition-all duration-500 ease-in-out" 
-          style={{ 
-            background: `rgba(255, 255, 255, ${subSidebarOpacity})`, 
-            left: '338px',
-            transform: selectedIntelligence ? `translateX(calc(100vw - 338px - 320px - 32px))` : 'translateX(0)',
-          }}
-        >
-          <div className="db-sub-sidebar-live-pings mb-4">
-            <div className="flex items-center justify-between">
-              <h3 className="db-sub-sidebar-title" style={{ color: '#0ea5e9' }}>Live Astram Pings</h3>
-              <button 
-                onClick={() => {
-                  const newPing = {
-                    id: "weather-proactive-" + Date.now(),
-                    displayId: Date.now(),
-                    eventName: "Imminent Flash Flooding",
-                    street: "Silk Board Junction",
-                    lat: 12.9172,
-                    lng: 77.6228,
-                    type: "PROACTIVE" as const,
-                    dashCategory: "weather"
-                  };
-                  setActiveNotifications(prev => [newPing, ...prev]);
-                }}
-                className="text-[10px] bg-sky-100 hover:bg-sky-200 text-sky-700 px-2 py-1 rounded border border-sky-200 transition-colors font-medium"
-                title="Simulate Weather Impact"
-              >
-                + Weather Alert
-              </button>
+        {/* ── Quick Fading Astram Ping Toasts ── */}
+        <div className="absolute top-6 left-1/2 -translate-x-1/2 z-[1000] flex flex-col items-center space-y-2 pointer-events-none">
+          {activeNotifications.map(n => (
+            <div key={n.displayId} className="bg-rose-600 text-white px-5 py-2.5 rounded-full shadow-lg text-[13px] font-bold animate-fade-up-1 tracking-wider opacity-95 flex items-center space-x-2">
+              <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+              <span>LIVE PING: {n.street} - {n.eventName}</span>
             </div>
-            
-            {(activeNotifications.length > 0) ? (
-              <div className="db-sub-sidebar-list mt-2">
-                {activeNotifications.map(n => (
-                  <button
-                    key={n.displayId}
-                    className="db-sub-event-btn group relative"
-                    style={{ border: '1px solid rgba(14, 165, 233, 0.3)', backgroundColor: 'rgba(14, 165, 233, 0.05)' }}
-                    onClick={() => {
-                      setZoomTarget([n.lat, n.lng]);
-                      setIntelligenceLoading(true);
-                      fetch(`/api/v1/event/${n.id}/intelligence`)
-                        .then(res => res.json())
-                        .then(data => {
-                          if (data.status === 'success') setSelectedIntelligence(data); selectedEventIdRef.current = data.eventId;
-                          setIntelligenceLoading(false);
-                        })
-                        .catch(err => {
-                          console.error("Failed to load int:", err);
-                          setIntelligenceLoading(false);
-                        });
-                    }}
-                  >
-                    <span
-                      className="db-sub-event-dot"
-                      style={{ backgroundColor: "#0ea5e9", boxShadow: "0 0 8px #0ea5e9" }}
-                    />
-                    <div className="db-sub-event-info pr-6">
-                      <span className="db-sub-event-name">{n.street} - {n.eventName}</span>
-                      <span className="db-sub-event-time" style={{ color: '#7dd3fc' }}>Just Now</span>
-                    </div>
-                    <div 
-                      className="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 hover:bg-black/30 rounded-full text-slate-400 hover:text-red-400"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActiveNotifications(prev => prev.filter(p => p.displayId !== n.displayId));
-                      }}
-                    >
-                      <X size={14} />
-                    </div>
-                  </button>
-                ))}
-              </div>
-            ) : (
-              <div className="text-xs text-slate-400 py-4 text-center font-medium">No live pings currently active.</div>
-            )}
-          </div>
-        </aside>
-        )}
+          ))}
+        </div>
+
 
         {/* ── Sub-Locations Panel (Appears for selected category OR active pings) ── */}
         {(activeRailIdx !== 2 && layerClusters.length > 0 && (!selectedIntelligence || hoveredDashboard === activeDashboard)) && (
