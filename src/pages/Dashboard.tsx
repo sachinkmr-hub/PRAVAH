@@ -73,7 +73,7 @@ const SIDEBAR_ICONS = [
 ];
 
 const LOCATION_OPTIONS: { name: string; lat: number; lng: number }[] = [
-  { name: "Infantry Road",  lat: 12.9810, lng: 77.5940 }, // BCPS HQ — overview mode
+  { name: "Select Location",  lat: 12.9810, lng: 77.5940 }, // BCPS HQ — overview mode
   { name: "Ashok Nagar",    lat: 12.9716, lng: 77.6013 }, // Central division TPS
   { name: "Marathahalli",   lat: 12.9560, lng: 77.7010 }, // East division TPS
   { name: "Jayanagar",      lat: 12.9308, lng: 77.5833 }, // South division TPS
@@ -97,17 +97,7 @@ function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number): nu
 /* Radius (km) around a TPS centre that defines its jurisdiction */
 const TPS_RADIUS_KM = 1.5;
 
-/* ─── Bounds enforcer ─── */
-function BoundsEnforcer() {
-  const map = useMap();
-  useEffect(() => {
-    map.setMaxBounds(BLR_BOUNDS);
-    const enforceBounds = () => { map.panInsideBounds(BLR_BOUNDS, { animate: false }); };
-    map.on("drag", enforceBounds);
-    return () => { map.off("drag", enforceBounds); };
-  }, [map]);
-  return null;
-}
+
 
 /* ─── Fly to selected location OR reset to full city view ─── */
 function FlyToLocation({
@@ -680,7 +670,7 @@ export default function Dashboard() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeDashboard, setActiveDashboard] = useState("chronic");
   const [activeRailIdx, setActiveRailIdx] = useState(0);
-  const [selectedLocation, setSelectedLocation] = useState(LOCATION_OPTIONS[0]); // Default to Infantry Road
+  const [selectedLocation, setSelectedLocation] = useState(LOCATION_OPTIONS[0]); // Default to Select Location
   const [isLocationHovered, setIsLocationHovered] = useState(false);
   const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -714,6 +704,28 @@ export default function Dashboard() {
 
   const [selectedIntelligence, setSelectedIntelligence] = useState<EventIntelligence | null>(null);
   const selectedEventIdRef = useRef<string | null>(null);
+  const intelPanelRef = useRef<HTMLDivElement>(null);
+
+  // Outside click handler for intelligence panel
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (intelPanelRef.current && !intelPanelRef.current.contains(event.target as Node)) {
+        // Also ignore clicks on map markers, map controls, etc. if needed, 
+        // but for now, simple outside click works for Sidebar/Header clicks.
+        // We only want to close it if it's explicitly outside the panel and not on a marker.
+        // The MapClickHandler already handles map clicks.
+        
+        // Actually, to avoid conflicting with map marker clicks which SET the intelligence,
+        // we should only clear if the target is NOT a leaflet element.
+        const target = event.target as Element;
+        if (target && !target.closest('.leaflet-container') && !target.closest('.db-leaflet-map')) {
+          setSelectedIntelligence(null);
+        }
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => { document.removeEventListener("mousedown", handleClickOutside); };
+  }, []);
   const [aiStrategyResult, setAiStrategyResult] = useState<string | null>(null);
   const [intelligenceLoading, setIntelligenceLoading] = useState(false);
   const [hoveredCluster, setHoveredCluster] = useState<EventCluster | null>(null);
@@ -723,7 +735,7 @@ export default function Dashboard() {
 
   const [liveCounts, setLiveCounts] = useState<Record<string, number>>({});
 
-  const isOverview = selectedLocation.name === "Infantry Road";
+  const isOverview = selectedLocation.name === "Select Location";
 
   /* ── Clear caches when location changes so data refetches for new TPS area ── */
   useEffect(() => {
@@ -785,25 +797,33 @@ export default function Dashboard() {
       ? ''
       : `?lat=${selectedLocation.lat}&lng=${selectedLocation.lng}&radiusKm=4`;
       
-    const categories = ['incidents', 'weather', 'civic_works', 'events_vips', 'signal_failures'];
+    const fetchCategories = ['civic_works', 'events_vips'];
+    const allCategories = ['incidents', 'weather', 'civic_works', 'events_vips', 'signal_failures'];
     
-    Promise.all(categories.map(cat => 
+    Promise.all(fetchCategories.map(cat => 
       fetch(`/api/v1/grid/layer/${cat}${params}`).then(res => res.json())
     )).then(results => {
       setLayerData(prev => {
         const newData = { ...prev };
-        categories.forEach((cat, idx) => {
-          let clusters = results[idx].clusters || [];
-          // Force unplanned events to be zero at start, wait for Astram pings
-          if (cat === 'incidents' || cat === 'weather' || cat === 'signal_failures') {
-            clusters = [];
-          }
-          newData[cat] = clusters;
-          
-          // Accurately sum all underlying events in a cluster, not just the clusters themselves
-          const sum = clusters.reduce((acc: number, c: any) => acc + (c.events ? c.events.length : (c.event_count || 1)), 0);
-          setLiveCounts(prevCounts => ({ ...prevCounts, [cat]: sum }));
+        
+        // 1. Strictly enforce ZERO items for unplanned events UNLESS an Astram ping already populated it
+        if (!newData['incidents']) newData['incidents'] = [];
+        if (!newData['weather']) newData['weather'] = [];
+        if (!newData['signal_failures']) newData['signal_failures'] = [];
+
+        // 2. Hydrate planned categories from backend
+        fetchCategories.forEach((cat, idx) => {
+          newData[cat] = results[idx].clusters || [];
         });
+        
+        // 3. Accurately tally up counts (live events inside clusters)
+        const newCounts: Record<string, number> = {};
+        allCategories.forEach(cat => {
+          const catClusters = newData[cat] || [];
+          newCounts[cat] = catClusters.reduce((acc: number, c: any) => acc + (c.events ? c.events.length : (c.event_count || 1)), 0);
+        });
+        
+        setLiveCounts(newCounts);
         return newData;
       });
     }).catch(err => console.error('Failed to pre-fetch layers:', err));
@@ -815,7 +835,7 @@ export default function Dashboard() {
     const handleIncident = (message: MessageEvent) => {
       try {
         const event = JSON.parse(message.data).event;
-        const isInfantry = selectedLocation.name === "Infantry Road";
+        const isInfantry = selectedLocation.name === "Select Location";
         const dist = haversineKm(event.lat, event.lng, selectedLocation.lat, selectedLocation.lng);
         const isWithinRadius = dist <= TPS_RADIUS_KM;
 
@@ -1030,13 +1050,13 @@ export default function Dashboard() {
         </aside>
 
         {/* ── Live Astram Pings Panel ── */}
-        {!((activeRailIdx === 2 || activeRailIdx !== 2) && layerClusters.length > 0 && (!selectedIntelligence || hoveredDashboard === activeDashboard)) && (
+        {activeRailIdx !== 2 && !(layerClusters.length > 0 && (!selectedIntelligence || hoveredDashboard === activeDashboard)) && (
         <aside 
           className="db-sub-sidebar transition-all duration-500 ease-in-out" 
           style={{ 
-            background: `rgba(255, 255, 255, ${subSidebarOpacity})`,
-            left: selectedIntelligence ? '338px' : 'auto',
-            right: selectedIntelligence ? 'auto' : '16px',
+            background: `rgba(255, 255, 255, ${subSidebarOpacity})`, 
+            left: '338px',
+            transform: selectedIntelligence ? `translateX(calc(100vw - 338px - 320px - 32px))` : 'translateX(0)',
           }}
         >
           <div className="db-sub-sidebar-live-pings mb-4">
@@ -1113,8 +1133,12 @@ export default function Dashboard() {
         )}
 
         {/* ── Sub-Locations Panel (Appears for selected category OR active pings) ── */}
-        {((activeRailIdx === 2 || activeRailIdx !== 2) && layerClusters.length > 0 && (!selectedIntelligence || hoveredDashboard === activeDashboard)) && (
-          <aside className="db-sub-sidebar animate-fade-right" style={{ background: `rgba(255, 255, 255, ${subSidebarOpacity})`, left: '338px' }}>
+        {(activeRailIdx !== 2 && layerClusters.length > 0 && (!selectedIntelligence || hoveredDashboard === activeDashboard)) && (
+          <aside className="db-sub-sidebar animate-fade-right transition-all duration-500 ease-in-out" style={{ 
+            background: `rgba(255, 255, 255, ${subSidebarOpacity})`, 
+            left: '338px',
+            transform: selectedIntelligence ? `translateX(calc(100vw - 338px - 320px - 32px))` : 'translateX(0)',
+          }}>
 
             {layerClusters.length > 0 && (
               <>
@@ -1146,7 +1170,7 @@ export default function Dashboard() {
                     >
                       <span
                         className="db-sub-event-dot"
-                        style={{ backgroundColor: URGENCY_COLORS[ev.urgency] }}
+                        style={{ backgroundColor: URGENCY_COLORS[ev.urgency] || CATEGORY_COLORS[activeDashboard] || '#cbd5e1' }}
                       />
                       <div className="db-sub-event-info pr-6">
                         <span className="db-sub-event-name">{ev.event_name}</span>
@@ -1211,8 +1235,11 @@ export default function Dashboard() {
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution='&copy; OpenStreetMap contributors'
+              detectRetina={true}
+              updateWhenZooming={true}
+              keepBuffer={8}
             />
-            <BoundsEnforcer />
+
             <FlyToLocation
               lat={selectedLocation.lat}
               lng={selectedLocation.lng}
@@ -1368,11 +1395,7 @@ export default function Dashboard() {
 
             <MapZoomControls />
             <MapClickHandler onMapClick={() => {
-              setActiveDashboard('chronic');
-              setActiveRailIdx(0);
               setSelectedIntelligence(null);
-              selectedEventIdRef.current = null;
-              setShowFeedbackToast(false);
               setExpandedClusterId(null);
             }} />
           </MapContainer>
@@ -1404,13 +1427,14 @@ export default function Dashboard() {
               : { border: 'border-rose-100', bg: 'bg-[#fdf3f3]', icon: 'text-[#e11d48]', bar: 'from-amber-400 to-rose-600', text: 'text-rose-900', lightBg: 'bg-white', sectionBg: 'bg-transparent' };
 
             return (
-              <div className={`absolute top-4 right-4 z-[999] w-[calc(100vw-32px)] md:w-[340px] rounded-[14px] shadow-2xl border overflow-hidden flex flex-col animate-fade-up-1 ${themeColors.bg} ${themeColors.border}`}>
+              <div ref={intelPanelRef} className={`absolute top-4 right-4 z-[999] w-[calc(100vw-32px)] md:w-[340px] rounded-[14px] shadow-2xl border overflow-hidden flex flex-col animate-fade-up-1 ${themeColors.bg} ${themeColors.border}`}>
                 <div className={`p-4 border-b flex justify-between items-center ${themeColors.border} ${themeColors.sectionBg}`}>
                   <div className="flex items-center space-x-2">
                     <Activity size={16} className={themeColors.icon} />
                     <span className={`text-xs font-bold tracking-wider font-mono uppercase ${themeColors.text}`}>{isProactive ? 'Proactive Alert' : 'Reactive Shockwave'}</span>
                   </div>
-                  <button onClick={() => {
+                  <button onClick={(e) => {
+                    e.stopPropagation();
                     setSelectedIntelligence(null); selectedEventIdRef.current = null;
                     setShowFeedbackToast(false);
                     setFeedbackScore(3);
@@ -1721,30 +1745,34 @@ export default function Dashboard() {
 
                         <button 
                           disabled={hitlTimeLeft === 0}
-                          onClick={async () => {
-                            const response = await fetch(`/api/v1/event/${selectedIntelligence.eventId}/feedback`, {
-                              method: 'POST',
-                              headers: { 'content-type': 'application/json' },
-                              body: JSON.stringify({ score: feedbackScore })
-                            });
-                            if (response.ok) {
-                              setShowFeedbackToast(true);
-                              setTimeout(() => {
-                                // Filter event from local state to close it
-                                setActiveNotifications(prev => prev.filter(p => p.id !== selectedIntelligence.eventId));
-                                setLayerData(prev => {
-                                  const newLayerData = { ...prev };
-                                  Object.keys(newLayerData).forEach(key => {
-                                    newLayerData[key] = newLayerData[key].map(c => ({
-                                      ...c,
-                                      events: c.events.filter(event => event.eventId !== selectedIntelligence.eventId)
-                                    })).filter(c => c.events.length > 0);
-                                  });
-                                  return newLayerData;
-                                });
-                                setSelectedIntelligence(null); selectedEventIdRef.current = null;
-                              }, 1500);
+                          onClick={async (e) => {
+                            e.stopPropagation();
+                            try {
+                              await fetch(`/api/v1/event/${selectedIntelligence.eventId}/feedback`, {
+                                method: 'POST',
+                                headers: { 'content-type': 'application/json' },
+                                body: JSON.stringify({ score: feedbackScore })
+                              });
+                            } catch(err) {
+                              // Ignore fetch failures for prototype simulation
                             }
+                            
+                            setShowFeedbackToast(true);
+                            setTimeout(() => {
+                              // Filter event from local state to close it
+                              setActiveNotifications(prev => prev.filter(p => p.id !== selectedIntelligence.eventId));
+                              setLayerData(prev => {
+                                const newLayerData = { ...prev };
+                                Object.keys(newLayerData).forEach(key => {
+                                  newLayerData[key] = newLayerData[key].map(c => ({
+                                    ...c,
+                                    events: c.events.filter(event => event.eventId !== selectedIntelligence.eventId)
+                                  })).filter(c => c.events.length > 0);
+                                });
+                                return newLayerData;
+                              });
+                              setSelectedIntelligence(null); selectedEventIdRef.current = null;
+                            }, 1500);
                           }}
                           className={`w-full py-2.5 text-white text-[12px] font-bold uppercase tracking-widest rounded transition-colors shadow-md flex items-center justify-center space-x-2 ${hitlTimeLeft === 0 ? 'bg-neutral-400 cursor-not-allowed' : 'bg-rose-600 hover:bg-rose-700'}`}
                         >

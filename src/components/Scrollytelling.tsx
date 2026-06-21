@@ -48,19 +48,27 @@ export const Scrollytelling: React.FC<ScrollytellingProps> = ({ theme = "light" 
   const isDark = theme === "dark";
 
   useEffect(() => {
+    let timeout: NodeJS.Timeout;
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const step = Number((entry.target as HTMLElement).dataset.step);
+        const intersecting = entries.filter(e => e.isIntersecting);
+        if (intersecting.length > 0) {
+          // Find the most visible entry if multiple
+          const dominant = intersecting.reduce((prev, current) => 
+            (prev.intersectionRatio > current.intersectionRatio) ? prev : current
+          );
+          
+          clearTimeout(timeout);
+          timeout = setTimeout(() => {
+            const step = Number((dominant.target as HTMLElement).dataset.step);
             setActiveStep(step);
-          }
-        });
+          }, 100);
+        }
       },
       {
         root: null,
         rootMargin: "-25% 0px -25% 0px",
-        threshold: 0.1,
+        threshold: [0.1, 0.5, 1.0],
       },
     );
 
@@ -165,15 +173,18 @@ const MAP_MARKERS = [
 ];
 
 const PremiumDashboard: React.FC<{ activeStep: number; isDark: boolean }> = ({ activeStep, isDark }) => {
-  const [userClosedPanel, setUserClosedPanel] = useState(false);
-  const clustersOpen = activeStep === 2 && !userClosedPanel;
-  const deployOpen = activeStep === 3 && !userClosedPanel;
+  const [closedCluster, setClosedCluster] = useState(false);
+  const [closedDeploy, setClosedDeploy] = useState(false);
+  
+  const clustersOpen = activeStep === 2 && !closedCluster;
+  const deployOpen = activeStep === 3 && !closedDeploy;
 
   // Determine which category is "active" per step
   const activeCatIdx = activeStep === 1 ? 0 : 3; // Chronic → Civic Works (for both step 2 and 3)
 
   useEffect(() => {
-    if (activeStep < 2) setUserClosedPanel(false);
+    if (activeStep !== 2) setClosedCluster(false);
+    if (activeStep !== 3) setClosedDeploy(false);
   }, [activeStep]);
 
   return (
@@ -252,9 +263,9 @@ const PremiumDashboard: React.FC<{ activeStep: number; isDark: boolean }> = ({ a
         {/* ── Map Stage ── */}
         <main className="pd-map-stage">
           <BengaluruMap activeStep={activeStep} />
-          <div className="pd-map-zoom">
-            <button>+</button>
-            <button>−</button>
+          <div className="pd-map-zoom opacity-50">
+            <button disabled className="cursor-not-allowed">+</button>
+            <button disabled className="cursor-not-allowed">−</button>
           </div>
           <span className="pd-map-attr">© OpenStreetMap</span>
         </main>
@@ -267,7 +278,7 @@ const PremiumDashboard: React.FC<{ activeStep: number; isDark: boolean }> = ({ a
               <span className="pd-intel-badge">REACTIVE SHOCKWAVE</span>
             </div>
             <button
-              onClick={() => setUserClosedPanel(true)}
+              onClick={() => setClosedDeploy(true)}
               className="pd-intel-close"
               title="Close"
             >×</button>
@@ -395,6 +406,9 @@ const BengaluruMap: React.FC<{ activeStep: number }> = ({ activeStep }) => (
         >
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            detectRetina={true}
+            updateWhenZooming={true}
+            keepBuffer={8}
           />
           <MapUpdater activeStep={activeStep} />
 
