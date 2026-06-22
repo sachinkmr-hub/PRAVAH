@@ -62,6 +62,8 @@ PRAVAH is designed as an expanding ecosystem. While we've laid the groundwork fo
 - **Traffic Camera (CCTV) Integration**: Direct integration with existing city CCTV/ITMS traffic cameras, utilizing computer vision to map live traffic density without requiring new physical hardware.
 - **Automated VMS Broadcasting**: Autonomous transmission of AI-generated diversion routes directly to city-wide Variable Message Signs (VMS), bypassing the human bottleneck.
 - **Predictive 'Green Corridors'**: Active integration with emergency fleets, dynamically clearing paths for ambulances based on real-time shockwave physics rather than static routing.
+- **Live Web Scraping**: Synthesizing early-warning data from civic announcements and social feeds to predict disruptions from protests, civic works, and VIP movements before they are officially logged.
+- **Live Weather API Integrations**: Combining live atmospheric readings with years of monsoon vulnerability maps to proactively flag weather-induced hotspots before the first drop of rain hits the asphalt.
 
 ---
 
