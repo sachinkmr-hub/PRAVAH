@@ -63,7 +63,7 @@ PRAVAH is designed as an expanding ecosystem. While we've laid the groundwork fo
 - **Automated VMS Broadcasting**: Autonomous transmission of AI-generated diversion routes directly to city-wide Variable Message Signs (VMS), bypassing the human bottleneck.
 - **Predictive 'Green Corridors'**: Active integration with emergency fleets, dynamically clearing paths for ambulances based on real-time shockwave physics rather than static routing.
 - **Live Web Scraping**: Synthesizing early-warning data from civic announcements and social feeds to predict disruptions from protests, civic works, and VIP movements before they are officially logged.
-- **Live Weather API Integrations**: Combining live atmospheric readings with years of monsoon vulnerability maps to proactively flag weather-induced hotspots before the first drop of rain hits the asphalt.
+- **Live Weather API Integrations**: We are actively replicating the foundation for live weather data ingestion, with the complete integration of combining real-time atmospheric readings and monsoon vulnerability maps planned for the near future.
 
 ---
 
