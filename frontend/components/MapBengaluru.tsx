@@ -136,7 +136,8 @@ export default function MapBengaluru({
       map.addControl(new mapboxgl.NavigationControl({ showCompass: true }), "top-right");
       map.fitBounds(BANGALORE_BOUNDS, {
         padding: 40,
-        animate: true,
+        duration: 2500,
+        essential: true,
       });
     });
 
@@ -262,7 +263,9 @@ export default function MapBengaluru({
         ],
         {
           padding: 40,
-          animate: true,
+          duration: 2000,
+          maxZoom: 14,
+          essential: true,
         }
       );
     }

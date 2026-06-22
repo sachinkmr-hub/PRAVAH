@@ -387,10 +387,11 @@ function MiddlePanel({
   if (activeRailIdx === 0) return null;
 
   return (
-    <div className="db-middle-overlay">
+    <div className="db-middle-overlay" onClick={() => { setActiveRailIdx(0); }}>
       <div 
         className="db-middle-panel" 
         ref={panelRef}
+        onClick={(e) => e.stopPropagation()}
         style={{ background: `rgba(255, 255, 255, ${panelOpacity})` }}
       >
         {/* Opacity slider removed */}
@@ -714,9 +715,10 @@ export default function Dashboard() {
       // Do nothing if the click originated from inside ANY panel or navigation UI
       if (
         !target ||
+        target.closest('.db-sidebar') || 
+        target.closest('.db-rail') || 
         target.closest('.db-sub-sidebar') || 
         target.closest('.db-middle-panel') || 
-        target.closest('.db-rail-container') || 
         target.closest('.db-location-picker') ||
         (intelPanelRef.current && intelPanelRef.current.contains(target))
       ) {
@@ -737,6 +739,7 @@ export default function Dashboard() {
       setSelectedIntelligence(null);
       selectedEventIdRef.current = null;
       setActiveRailIdx(0);
+      setActiveDashboard("chronic");
     }
     
     document.addEventListener("mousedown", handleClickOutside);
@@ -1077,79 +1080,84 @@ export default function Dashboard() {
 
 
         {/* ── Sub-Locations Panel (Appears for selected category OR active pings) ── */}
-        {(activeRailIdx !== 2 && layerClusters.length > 0 && (!selectedIntelligence || hoveredDashboard === activeDashboard)) && (
-          <aside className="db-sub-sidebar animate-fade-right transition-all duration-500 ease-in-out" style={{ 
-            background: `rgba(255, 255, 255, ${subSidebarOpacity})`, 
-            left: '338px',
-            transform: selectedIntelligence ? `translateX(calc(100vw - 338px - 320px - 32px))` : 'translateX(0)',
-          }}>
-
-            {layerClusters.length > 0 && (
-              <>
-                <h3 className="db-sub-sidebar-title">
-                  {activeRailIdx === 2 ? 'All Layers & Records' : `${DASHBOARD_CATEGORIES.find(c => c.key === activeDashboard)?.name} Clusters`}
-                </h3>
-            <div className="db-sub-sidebar-list">
-              {layerClusters.map((cluster) => (
-                <div key={cluster.clusterId} className="db-sub-sidebar-group">
-                  <h4 className="db-sub-sidebar-group-title">{cluster.location_name}</h4>
-                  {cluster.events.map(ev => (
-                    <button
-                      key={ev.eventId}
-                      className="db-sub-event-btn group relative"
-                      onClick={() => {
-                        setZoomTarget([cluster.latitude, cluster.longitude]);
-                        setIntelligenceLoading(true);
-                        fetch(`/api/v1/event/${ev.eventId}/intelligence`)
-                          .then(res => res.json())
-                          .then(data => {
-                            if (data.status === 'success') setSelectedIntelligence(data); selectedEventIdRef.current = data.eventId;
-                            setIntelligenceLoading(false);
-                          })
-                          .catch(err => {
-                            console.error("Failed to load int:", err);
-                            setIntelligenceLoading(false);
-                          });
-                      }}
-                    >
-                      <span
-                        className="db-sub-event-dot"
-                        style={{ backgroundColor: URGENCY_COLORS[ev.urgency] || CATEGORY_COLORS[activeDashboard] || '#cbd5e1' }}
-                      />
-                      <div className="db-sub-event-info pr-6">
-                        <span className="db-sub-event-name">{ev.event_name}</span>
-                        <span className="db-sub-event-time">{relativeLabel(ev.start_datetime)}</span>
-                      </div>
-                      <div 
-                        className="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 hover:bg-black/10 rounded-full text-slate-400 hover:text-red-500"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setLayerData(prev => {
-                            const newLayerData = { ...prev };
-                            Object.keys(newLayerData).forEach(key => {
-                              newLayerData[key] = newLayerData[key].map(c => ({
-                                ...c,
-                                events: c.events.filter(event => event.eventId !== ev.eventId)
-                              })).filter(c => c.events.length > 0);
+        <aside className="db-sub-sidebar transition-all duration-500 ease-in-out" style={{ 
+          background: `rgba(255, 255, 255, ${subSidebarOpacity})`, 
+          left: '338px',
+          transform: (activeRailIdx !== 2 && layerClusters.length > 0 && (!selectedIntelligence || hoveredDashboard === activeDashboard)) 
+            ? (selectedIntelligence ? `translateX(calc(100vw - 338px - 320px - 32px))` : 'translateX(0)')
+            : 'translateX(-120%)',
+          opacity: (activeRailIdx !== 2 && layerClusters.length > 0 && (!selectedIntelligence || hoveredDashboard === activeDashboard)) ? 1 : 0,
+          pointerEvents: (activeRailIdx !== 2 && layerClusters.length > 0 && (!selectedIntelligence || hoveredDashboard === activeDashboard)) ? 'auto' : 'none',
+          visibility: (activeRailIdx !== 2 && layerClusters.length > 0) ? 'visible' : 'hidden'
+        }}>
+          {layerClusters.length > 0 && (
+            <>
+              <h3 className="db-sub-sidebar-title">
+                {activeRailIdx === 2 ? 'All Layers & Records' : `${DASHBOARD_CATEGORIES.find(c => c.key === activeDashboard)?.name || 'Category'} Clusters`}
+              </h3>
+              <div className="db-sub-sidebar-list">
+                {layerClusters.map((cluster) => (
+                  <div key={cluster.clusterId} className="db-sub-sidebar-group">
+                    <h4 className="db-sub-sidebar-group-title">{cluster.location_name}</h4>
+                    {cluster.events.map(ev => (
+                      <button
+                        key={ev.eventId}
+                        className="db-sub-event-btn group relative"
+                        onClick={() => {
+                          setZoomTarget([cluster.latitude, cluster.longitude]);
+                          setIntelligenceLoading(true);
+                          fetch(`/api/v1/event/${ev.eventId}/intelligence`)
+                            .then(res => res.json())
+                            .then(data => {
+                              if (data.status === 'success') {
+                                setSelectedIntelligence(data); 
+                                selectedEventIdRef.current = data.eventId;
+                              }
+                              setIntelligenceLoading(false);
+                            })
+                            .catch(err => {
+                              console.error("Failed to load int:", err);
+                              setIntelligenceLoading(false);
                             });
-                            return newLayerData;
-                          });
-                          if (selectedIntelligence?.eventId === ev.eventId) {
-                            setSelectedIntelligence(null); selectedEventIdRef.current = null;
-                          }
                         }}
                       >
-                        <X size={14} />
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              ))}
-            </div>
+                        <span
+                          className="db-sub-event-dot"
+                          style={{ backgroundColor: URGENCY_COLORS[ev.urgency] || CATEGORY_COLORS[activeDashboard] || '#cbd5e1' }}
+                        />
+                        <div className="db-sub-event-info pr-6">
+                          <span className="db-sub-event-name">{ev.event_name}</span>
+                          <span className="db-sub-event-time">{relativeLabel(ev.start_datetime)}</span>
+                        </div>
+                        <div 
+                          className="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 hover:bg-black/10 rounded-full text-slate-400 hover:text-red-500"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setLayerData(prev => {
+                              const newLayerData = { ...prev };
+                              Object.keys(newLayerData).forEach(key => {
+                                newLayerData[key] = newLayerData[key].map(c => ({
+                                  ...c,
+                                  events: c.events.filter(event => event.eventId !== ev.eventId)
+                                })).filter(c => c.events.length > 0);
+                              });
+                              return newLayerData;
+                            });
+                            if (selectedIntelligence?.eventId === ev.eventId) {
+                              setSelectedIntelligence(null); selectedEventIdRef.current = null;
+                            }
+                          }}
+                        >
+                          <X size={14} />
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                ))}
+              </div>
             </>
-            )}
-          </aside>
-        )}
+          )}
+        </aside>
 
         {/* Map Area */}
         <main className="db-map-area">
@@ -1341,6 +1349,8 @@ export default function Dashboard() {
             <MapClickHandler onMapClick={() => {
               setSelectedIntelligence(null);
               setExpandedClusterId(null);
+              setActiveDashboard("chronic");
+              setActiveRailIdx(0);
             }} />
           </MapContainer>
 

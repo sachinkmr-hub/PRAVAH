@@ -166,7 +166,7 @@ export default function App() {
                   }`}>Proactive Response And Vehicular Analytics Hub</p>
                   <p className={`text-[12px] font-sans font-medium mt-1.5 ${
                     isDark ? "text-rose-400" : "text-rose-600"
-                  }`}>PRAVAH hai – hume aapki PARVAH hai ❤️</p>
+                  }`}>PRAVAH hai - kyuki parvah hai</p>
                 </div>
               </div>
               <div className="flex flex-wrap gap-x-8 gap-y-3">
