@@ -1087,8 +1087,7 @@ export default function Dashboard() {
             ? (selectedIntelligence ? `translateX(calc(100vw - 338px - 320px - 32px))` : 'translateX(0)')
             : 'translateX(-120%)',
           opacity: (activeRailIdx !== 2 && layerClusters.length > 0 && (!selectedIntelligence || hoveredDashboard === activeDashboard)) ? 1 : 0,
-          pointerEvents: (activeRailIdx !== 2 && layerClusters.length > 0 && (!selectedIntelligence || hoveredDashboard === activeDashboard)) ? 'auto' : 'none',
-          visibility: (activeRailIdx !== 2 && layerClusters.length > 0) ? 'visible' : 'hidden'
+          pointerEvents: (activeRailIdx !== 2 && layerClusters.length > 0 && (!selectedIntelligence || hoveredDashboard === activeDashboard)) ? 'auto' : 'none'
         }}>
           {layerClusters.length > 0 && (
             <>

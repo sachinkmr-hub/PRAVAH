@@ -554,11 +554,11 @@ async function start() {
     console.log(`PRAVAH simulation engine listening on http://localhost:${PORT}`);
     autoSimulationTimer = setInterval(() => {
       if (sseClients.size) broadcastSimulation();
-    }, Number(process.env.SIMULATION_INTERVAL_MS ?? 5000));
+    }, Number(process.env.SIMULATION_INTERVAL_MS ?? 12000));
 
     // Data-driven Predictive Event Injection 15 seconds after boot
     setTimeout(() => {
-      const sourceEvents = historical.filter(e => e.severe).slice(0, 3);
+      const sourceEvents = historical.filter(e => e.severe).slice(0, 2);
       sourceEvents.forEach((sourceEvent, idx) => {
         predictiveQueue.push({
           ...sourceEvent,
@@ -571,6 +571,27 @@ async function start() {
           endMs: null,
           status: "ACTIVE"
         });
+      });
+      // Inject one explicit weather alert ping
+      predictiveQueue.push({
+          id: `WEATHER_ALERT_${Date.now()}`,
+          eventType: "SEVERE_WEATHER",
+          cause: "SUDDEN HEAVY RAINFALL - FLASH FLOOD RISK",
+          dashCategory: "weather",
+          address: "Koramangala 100ft Road",
+          latitude: 12.935,
+          longitude: 77.624,
+          startMs: CONFIG.nowMs + 600000,
+          startDatetime: new Date(CONFIG.nowMs + 600000).toISOString(),
+          endMs: null,
+          endDatetime: null,
+          severe: true,
+          status: "ACTIVE",
+          paradigm: "PROACTIVE",
+          corridor: "INNER RING",
+          junction: "SONY WORLD",
+          requiresRoadClosure: false,
+          durationMinutes: 120
       });
       console.log(JSON.stringify({ level: "info", message: "injected_data_driven_predictive_events" }));
     }, 15000);
