@@ -85,7 +85,6 @@ PRAVAH is designed as an expanding ecosystem. While we've laid the groundwork fo
 2. **Environment Configuration**
    Create a `.env` file:
    ```env
-   GROQ_API_KEY=your_groq_api_key_here
    PORT=3000
    ```
 3. **Launch**
