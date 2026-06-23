@@ -8,6 +8,19 @@
 
 <br />
 
+## Architecture Philosophy: Applied AI vs. "Black Box" ML
+
+**Why did we choose this architecture for an ML Hackathon?** 
+In high-stakes civic operations like emergency traffic command, relying on a pure, "black-box" Machine Learning model is dangerous. When an ambulance is stuck, a police officer cannot act on a hallucinated prediction they don't fully understand. 
+
+Instead of training a fragile ML model on synthetic data that fails in the real world, we built a production-ready **Applied AI Ecosystem**:
+1. **Deterministic Physics & KNN Data Matching:** For traffic shockwave and queue growth predictions, we utilize established kinematic formulas driven by a **K-Nearest Neighbors (KNN)-style historical data matching algorithm**. This guarantees 100% explainable, hallucination-free metrics.
+2. **Generative AI for Synthesis:** We use State-of-the-Art Large Language Models (LLaMA 3.1 via Groq) strictly as a high-speed reasoning engine. It instantly synthesizes our deterministic metrics into human-readable, tactical advisories.
+
+**Our Vision:** We didn't build a toy ML model in a Jupyter Notebook. We engineered a scalable, full-stack pipeline that works *today* with limited public datasets, while being perfectly positioned to ingest live Computer Vision (ML) CCTV feeds tomorrow. We use Math for the physics, and AI for the reasoning.
+
+---
+
 ![PRAVAH Map Preview](./map-preview.png)
 
 ## The Story So Far
