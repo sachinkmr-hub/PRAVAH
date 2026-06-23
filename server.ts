@@ -440,10 +440,18 @@ app.get("/api/v1/events/stream", (req, res) => {
     sseClients.add(res);
 
     let interval: NodeJS.Timeout | null = null;
-    interval = setInterval(() => {
+    
+    // First ping exactly 5 seconds after connection
+    setTimeout(() => {
       const payload = nextSimulatedEvent();
       if (payload) res.write(`id: ${payload.sequence}\nevent: astram.incident\ndata: ${JSON.stringify(payload)}\n\n`);
-    }, Number(process.env.SIMULATION_INTERVAL_MS ?? 5000));
+      
+      // Subsequent pings every 2 seconds
+      interval = setInterval(() => {
+        const payload = nextSimulatedEvent();
+        if (payload) res.write(`id: ${payload.sequence}\nevent: astram.incident\ndata: ${JSON.stringify(payload)}\n\n`);
+      }, 2000);
+    }, 5000);
 
     req.on("close", () => {
       if (interval) clearInterval(interval);
@@ -552,9 +560,6 @@ async function start() {
   }
   const server = app.listen(PORT, "0.0.0.0", () => {
     console.log(`PRAVAH simulation engine listening on http://localhost:${PORT}`);
-    autoSimulationTimer = setInterval(() => {
-      if (sseClients.size) broadcastSimulation();
-    }, Number(process.env.SIMULATION_INTERVAL_MS ?? 12000));
 
     // Data-driven Predictive Event Injection 15 seconds after boot
     setTimeout(() => {
